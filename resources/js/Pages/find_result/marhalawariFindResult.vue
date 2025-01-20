@@ -4,15 +4,17 @@ import { ref, computed } from 'vue';
 
 
 
-
 const props = defineProps({
   canLogin: Boolean,
   canRegister: Boolean,
   availableYears: Array,
   marhalas: Object,
   searchResults: Object,
-  studentDetails: Object // Add this prop explicitly
+  studentDetails: Object
 });
+
+const searchResults = props.searchResults || { data: [], last_page: 1 };
+
 
 const studentDetails = props.studentDetails || {};
 
@@ -20,8 +22,10 @@ const form = ref({
     CID: '',
     years: '',
     Roll: '',
-    reg_id: ''
+    reg_id: '',
+    Elhaq: ''  // Add this property
 });
+
 
 
 
@@ -104,18 +108,18 @@ const getGrade = (marks) => {
     return 'F';
 }
 
-const search = () => {
-    if (!form.value.CID || !form.value.years || !form.value.Roll || !form.value.reg_id) {
-        alert('Please fill all required fields');
-        return;
-    }
+// const search = () => {
+//     if (!form.value.CID || !form.value.years || !form.value.Elhaq) {
+//         alert('Please fill all required fields');
+//         return;
+//     }
 
-    router.get(route('find_result.studentResultFind'), form.value, {
-        preserveState: true,
-        preserveScroll: true,
-        only: ['searchResults']
-    });
-};
+//     router.get(route('find_result.studentResultFind'), form.value, {
+//         preserveState: true,
+//         preserveScroll: true,
+//         only: ['searchResults']
+//     });
+// };
 
 
 // Function to calculate percentage
@@ -134,6 +138,49 @@ const downloadPDF = () => {
     };
 
     html2pdf().set(opt).from(element).save();
+};
+
+const search = () => {
+    if (!form.value.CID) {
+        alert('মারহালা নির্বাচন করুন');
+        return;
+    }
+    if (!form.value.years) {
+        alert('বছর নির্বাচন করুন');
+        return;
+    }
+    if (!form.value.Elhaq) {
+        alert('রোল নম্বর লিখুন');
+        return;
+    }
+
+    router.get(route('find_result.marhalawariFindResult'), {
+        CID: form.value.CID,
+        years: form.value.years,
+        Elhaq: form.value.Elhaq
+    }, {
+        preserveState: true,
+        preserveScroll: true
+    });
+};
+
+
+
+const fetchPage = (page) => {
+    if (page > 0 && page <= searchResults.last_page) {
+        Inertia.visit(route('find_result.marhalawariFindResult'), {
+            method: 'get',
+            data: {
+                CID: form.value.CID,
+                years: form.value.years,
+                Elhaq: form.value.Elhaq,
+                page: page
+            },
+            preserveState: true,
+            replace: true,
+            only: ['searchResults']  // Only update specific data without full reload
+        });
+    }
 };
 
 </script>
@@ -173,117 +220,78 @@ const downloadPDF = () => {
         <main class="container mx-auto px-4 py-8">
             <!-- Search Form -->
             <div class="bg-white rounded-lg shadow-sm p-6 mb-8">
-                <div class="mb-6 text-left">
-        <h2 class="text-2xl font-bold text-[#1a237e]">ব্যক্তিগত ফলাফল অনুসন্ধান</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-end">
+        <div>
+            <label class="block text-gray-700 mb-2 font-semibold">মারহালা নির্বাচন করুন</label>
+            <select v-model="form.CID" class="w-full border rounded-md p-2">
+                <option value="">নির্বাচন করুন</option>
+                <option v-for="(name, id) in marhalas" :key="id" :value="id">
+                    {{ name }}
+                </option>
+            </select>
+        </div>
+
+        <div>
+            <label class="block text-black mb-2 font-semibold">বছর নির্বাচন করুন</label>
+            <select v-model="form.years" class="w-full border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-[#004D40] text-black">
+                <option value="">সন নির্বাচন করুন</option>
+                <option v-for="year in availableYears" :key="year" :value="year">{{ year }}</option>
+            </select>
+        </div>
+
+        <div>
+            <label class="block text-black mb-2 font-semibold">ইলহাক নম্বর দিন</label>
+            <input
+                v-model="form.Elhaq"
+                type="text"
+                placeholder="রোল নম্বর লিখুন"
+                class="w-full border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-[#004D40] text-black"
+            >
+        </div>
+
+        <div class="text-right">
+            <button @click="search" class="bg-[#1a237e] text-white px-8 py-2 rounded-md hover:bg-[#283593] transition-colors w-full">
+                ফলাফল খুঁজুন
+            </button>
+        </div>
     </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                    <div>
-                        <label class="block text-gray-700 mb-2 font-semibold">মারহালা নির্বাচন করুন</label>
-                        <select v-model="form.CID" class="w-full border rounded-md p-2">
-                            <option value="">নির্বাচন করুন</option>
-                            <option v-for="(name, id) in marhalas" :key="id" :value="id">
-                                {{ name }}
-                            </option>
-                        </select>
-                    </div>
-
-                    <div class="flex-1 min-w-[200px]">
-                    <label class="block text-black mb-2 font-semibold">বছর নির্বাচন করুন</label>
-                    <select v-model="form.years" class="w-full border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-[#004D40] text-black">
-                        <option value="">সন নির্বাচন করুন</option>
-                        <option v-for="year in availableYears" :key="year" :value="year">{{ year }}</option>
-                    </select>
-                </div>
-                <div class="flex-1 min-w-[200px]">
-                    <label class="block text-black mb-2 font-semibold" >রোল নম্বর</label>
-                    <input
-                        v-model="form.Roll"
-                        type="text"
-                        placeholder="রোল নম্বর লিখুন"
-                        class="w-full border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-[#004D40] text-black"
-                    >
-                </div>
-
-                <div class="flex-1 min-w-[200px]">
-                    <label class="block text-black mb-2 font-semibold">রেজিস্ট্রেশন নম্বর</label>
-                    <input
-                        v-model="form.reg_id"
-                        type="text"
-                        placeholder="রেজিস্ট্রেশন নম্বর লিখুন"
-                        class="w-full border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-[#004D40] text-black"
-                    >
-                </div>
-                    <!-- Continue with other form fields -->
-                    <!-- ... -->
-
-
-                </div>
-
-                <div class="mt-6 text-right">
-                    <button @click="search" class="bg-[#1a237e] text-white px-8 py-2 rounded-md hover:bg-[#283593] transition-colors">
-                        ফলাফল খুঁজুন
-                    </button>
-                </div>
-            </div>
-
-            <!-- Results Section -->
-            <div v-if="searchResults?.data?.length" class="bg-white rounded-md shadow-xl p-6">
-
-
-
-<div class="flex justify-end gap-4 mb-6">
-
-
-<button
-    @click="window.print()"
-    class="flex items-center gap-2 bg-[#004D40] text-white px-4 py-2 rounded-md hover:bg-[#00695C] transition"
->
-    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
-    </svg>
-    প্রিন্ট করুন
-</button>
-
-<button
-    @click="downloadPDF"
-    class="flex items-center gap-2 bg-[#004D40] text-white px-4 py-2 rounded-md hover:bg-[#00695C] transition"
->
-    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-    </svg>
-    ডাউনলোড করুন
-</button>
 </div>
 
 
-<div v-for="student in searchResults.data" :key="student.id">
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <!-- Student Information -->
-        <div class="space-y-4">
-            <div class="flex justify-between border-b pb-2 text-black">
-                <span class="font-semibold">নাম:</span>
-                <span>{{ student.Name }}</span>
-            </div>
-            <div class="flex justify-between border-b pb-2 text-black">
-                <span class="font-semibold">পিতার নাম:</span>
-                <span>{{ student.Father}}</span>
-            </div>
-            <div class="flex justify-between border-b pb-2 text-black">
-                <span class="font-semibold">রোল নম্বর:</span>
-                <span>{{ student.Roll }}</span>
-            </div>
-            <div class="flex justify-between border-b pb-2 text-black">
-                <span class="font-semibold">রেজিস্ট্রেশন নম্বর:</span>
-                <span>{{ student.reg_id }}</span>
-            </div>
-            <div class="flex justify-between border-b pb-2 text-black">
-                <span class="font-semibold">মাদরাসার নাম:</span>
-                <span>{{ student.Madrasha }}</span>
+            <!-- Results Section -->
+<!-- Results Section -->
+<div v-if="searchResults?.data && searchResults.data.length > 0" class="bg-white rounded-md shadow-xl p-6 relative">
+    <!-- Action Buttons -->
+    <div class="absolute top-6 right-6 flex space-x-4">
+        <button
+            @click="printTable"
+            class="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 shadow-md">
+            প্রিন্ট করুন
+        </button>
+        <button
+            @click="downloadPDF"
+            class="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 shadow-md">
+            PDF ডাউনলোড
+        </button>
+    </div>
+
+    <!-- Madrasa Information -->
+    <div class="mb-8">
+        <h3 class="text-2xl font-bold text-[#1a237e] mb-4">মাদরাসার তথ্য</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="space-y-4">
+                <div class="flex justify-between border-b pb-2 text-black">
+                    <span class="font-semibold">মাদরাসার নাম:</span>
+                    <span>{{ searchResults.data[0]?.Madrasha }}</span>
+                </div>
+                <div class="flex justify-between border-b pb-2 text-black">
+                    <span class="font-semibold">ইলহাক নম্বর:</span>
+                    <span>{{ searchResults.data[0]?.Elhaq }}</span>
+                </div>
             </div>
         </div>
-
-        <!-- Result Information -->
-        <div class="space-y-4">
+    </div>
+    <!-- <div class="space-y-4">
             <div class="bg-gray-50 p-4 rounded-lg">
                 <h3 class="text-xl font-bold text-black mb-4">ফলাফল সারসংক্ষেপ</h3>
                 <div class="space-y-2">
@@ -310,43 +318,68 @@ const downloadPDF = () => {
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
+
+
+    <!-- Students Results Table -->
+    <div class="overflow-x-auto">
+        <table id="resultsTable" class="w-full border border-gray-200 rounded-md">
+            <thead class="bg-gray-50 text-black">
+                <tr>
+                    <th class="px-4 py-2 text-left">রোল</th>
+                    <th class="px-4 py-2 text-left">নাম</th>
+                    <th v-for="(subject, index) in getSubjects(searchResults.data[0])"
+                        :key="index"
+                        class="px-4 py-2 text-center">
+                        {{ subject.name }}
+                    </th>
+                    <th class="px-4 py-2 text-center">মোট</th>
+                    <th class="px-4 py-2 text-center">বিভাগ</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-200 text-black">
+                <tr v-for="student in searchResults.data" :key="student.id">
+                    <td class="px-4 py-2">{{ student.Roll }}</td>
+                    <td class="px-4 py-2">{{ student.Name }}</td>
+                    <td v-for="n in 8" :key="n" class="px-4 py-2 text-center">
+                        {{ student[`SubValue_${n}`] }}
+                    </td>
+                    <td class="px-4 py-2 text-center font-bold">{{ student.Total }}</td>
+                    <td class="px-4 py-2 text-center">{{ student.Division }}</td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 
-    <!-- Detailed Marks -->
-    <div class="mt-8">
-        <h3 class="text-xl font-bold text-black mb-4">বিস্তারিত নম্বর</h3>
-        <div class="overflow-x-auto">
-            <table class="w-full">
-                <thead class="bg-gray-50">
-                    <tr class="text-black">
-                        <th class="px-4 py-2 text-left">বিষয়</th>
-                        <th class="px-4 py-2 text-center">পূর্ণমান</th>
-                        <th class="px-4 py-2 text-center">প্রাপ্ত নম্বর</th>
-                        <th class="px-4 py-2 text-center">গ্রেড</th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y text-black font-semibold" >
-<tr v-for="(subject, index) in getSubjects(searchResults?.data?.[0])" :key="index">
-<td class="px-4 py-2">{{ subject.name }}</td>
-<td class="px-4 py-2 text-center">১০০</td>
-<td class="px-4 py-2 text-center font-semibold">
-{{ searchResults?.data?.[0]?.[`SubValue_${index + 1}`] }}
-</td>
-<td class="px-4 py-2 text-center font-semibold">
-{{ getGrade(searchResults?.data?.[0]?.[`SubValue_${index + 1}`]) }}
-</td>
-</tr>
-</tbody>
-            </table>
-        </div>
+    <!-- Pagination -->
+    <div class="mt-6 flex items-center justify-center space-x-2">
+        <button
+            @click="fetchPage(searchResults.current_page - 1)"
+            :disabled="!searchResults.prev_page_url"
+            class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 disabled:opacity-50">
+            পূর্ববর্তী
+        </button>
+        <span class="text-gray-700">পৃষ্ঠা {{ searchResults.current_page }} এর {{ searchResults.last_page }}</span>
+        <button
+            @click="fetchPage(searchResults.current_page + 1)"
+            :disabled="!searchResults.next_page_url"
+            class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 disabled:opacity-50">
+            পরবর্তী
+        </button>
     </div>
 </div>
 
 
+<!-- No Results Message -->
+<div v-else-if="form.CID && form.years && form.Elhaq" class="bg-white rounded-md shadow-xl p-6 text-center py-8">
+    <p class="text-xl text-gray-600">কোন ফলাফল পাওয়া যায়নি</p>
 </div>
+
         </main>
+
+
     </div>
+
 </template>
 
 <style>

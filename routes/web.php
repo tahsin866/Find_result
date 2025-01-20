@@ -30,6 +30,8 @@ Route::middleware('auth')->group(function () {
 Route::get('find_result/studentResultFind', [findtStudentController::class, 'search'])
     ->name('find_result.studentResultFind');
 
+    Route::get('find_result/marhalawariFindResult', [findtStudentController::class, 'marhalaFind'])
+    ->name('find_result.marhalawariFindResult');
     // Route::get('/find_result/studentResultFind/{Roll}/{reg_id}', [findtStudentController::class, 'search'])->name('find_result.studentResultFind');
 
 

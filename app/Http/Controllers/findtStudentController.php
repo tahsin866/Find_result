@@ -47,6 +47,34 @@ class findtStudentController extends Controller
 
 
 
+    public function marhalaFind(Request $request)
+    {
+        $years = students_number_potrro::select('years')
+            ->distinct()
+            ->orderBy('years', 'desc')
+            ->pluck('years');
+
+        $marhalas = [
+            2 => 'ফযিলত',
+            3 => 'সানাবিয়া উলইয়া',
+        ];
+
+        $results = [];
+
+        if ($request->CID && $request->years && $request->Elhaq) {
+            $results = students_number_potrro::where('CID', $request->CID)
+                ->where('years', $request->years)
+                ->where('Elhaq', $request->Elhaq)
+                ->orderBy('Roll', 'asc')
+                ->paginate(10); // Paginate with 10 results per page
+        }
+
+        return Inertia::render('find_result/marhalawariFindResult', [
+            'availableYears' => $years,
+            'marhalas' => $marhalas,
+            'searchResults' => $results // Pagination data will include links, current page, etc.
+        ]);
+    }
 
 
 
