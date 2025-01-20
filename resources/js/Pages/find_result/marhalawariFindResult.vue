@@ -264,15 +264,24 @@ const fetchPage = (page) => {
     <!-- Action Buttons -->
     <div class="absolute top-6 right-6 flex space-x-4">
         <button
-            @click="printTable"
-            class="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 shadow-md">
-            প্রিন্ট করুন
-        </button>
-        <button
-            @click="downloadPDF"
-            class="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 shadow-md">
-            PDF ডাউনলোড
-        </button>
+    @click="window.print()"
+    class="flex items-center gap-2 bg-[#004D40] text-white px-4 py-2 rounded-md hover:bg-[#00695C] transition"
+>
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+    </svg>
+    প্রিন্ট করুন
+</button>
+
+<button
+    @click="downloadPDF"
+    class="flex items-center gap-2 bg-[#004D40] text-white px-4 py-2 rounded-md hover:bg-[#00695C] transition"
+>
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+    </svg>
+    ডাউনলোড করুন
+</button>
     </div>
 
     <!-- Madrasa Information -->
@@ -287,6 +296,10 @@ const fetchPage = (page) => {
                 <div class="flex justify-between border-b pb-2 text-black">
                     <span class="font-semibold">ইলহাক নম্বর:</span>
                     <span>{{ searchResults.data[0]?.Elhaq }}</span>
+                </div>
+                <div class="flex justify-between border-b pb-2 text-black">
+                    <span class="font-semibold">মারহালা:</span>
+                    <span>{{ searchResults.data[0]?.Class }}</span>
                 </div>
             </div>
         </div>
