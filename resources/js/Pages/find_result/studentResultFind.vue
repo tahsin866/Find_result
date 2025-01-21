@@ -64,33 +64,77 @@ const form = ref({
 // });
 
 
-const maleSubjects = [
-  { name: 'মিশকাতুল মাসাবিহ (প্রথম খন্ড)' },
-  { name: 'তাফসীরে বায়দাভী' },
-  { name: 'শরহুল আকায়েদ ও ফিরাকুল বাতিলা' },
-  { name: 'মিশকাতুল মাসাবিহ (দ্বিতীয় খন্ড)' },
-  { name: 'হেদায়া (তৃতীয় খন্ড)' },
-  { name: 'হেদায়া (চতুর্থ খন্ড)' },
-  { name: 'নুযহাতুন নযর' },
-  { name: 'তাহরীকে দারুল উলূম দেওবন্দ' }
-];
+// const maleSubjects = [
+//   { name: 'মিশকাতুল মাসাবিহ (প্রথম খন্ড)' },
+//   { name: 'তাফসীরে বায়দাভী' },
+//   { name: 'শরহুল আকায়েদ ও ফিরাকুল বাতিলা' },
+//   { name: 'মিশকাতুল মাসাবিহ (দ্বিতীয় খন্ড)' },
+//   { name: 'হেদায়া (তৃতীয় খন্ড)' },
+//   { name: 'হেদায়া (চতুর্থ খন্ড)' },
+//   { name: 'নুযহাতুন নযর' },
+//   { name: 'তাহরীকে দারুল উলূম দেওবন্দ' }
+// ];
 
-const femaleSubjects = [
-  { name: 'মিশকাতুল মাসাবিহ (প্রথম খন্ড)' },
-  { name: 'তাফসীরে জালালাইন (প্রথম খন্ড)' },
-  { name: 'তাফসীরে জালালাইন (দ্বিতীয় খন্ড)' },
-  { name: 'মিশকাতুল মাসাবিহ (দ্বিতীয় খন্ড)' },
-  { name: 'হেদায়া (তৃতীয় খন্ড)' },
-  { name: 'হেদায়া (চতুর্থ খন্ড)' },
-  { name: 'আকীদাতুত তাহাবী' }
-];
+// const femaleSubjects = [
+//   { name: 'মিশকাতুল মাসাবিহ (প্রথম খন্ড)' },
+//   { name: 'তাফসীরে জালালাইন (প্রথম খন্ড)' },
+//   { name: 'তাফসীরে জালালাইন (দ্বিতীয় খন্ড)' },
+//   { name: 'মিশকাতুল মাসাবিহ (দ্বিতীয় খন্ড)' },
+//   { name: 'হেদায়া (তৃতীয় খন্ড)' },
+//   { name: 'হেদায়া (চতুর্থ খন্ড)' },
+//   { name: 'আকীদাতুত তাহাবী' }
+// ];
 
-const getSubjects = (student) => {
-  return student?.SRType === 0 ? femaleSubjects : maleSubjects;
+
+// const studentResults = ref({
+//     SubValue_1: studentDetails.SubValue_1 || '',
+//     SubValue_2: studentDetails.SubValue_2 || '',
+//     SubValue_3: studentDetails.SubValue_3 || '',
+//     SubValue_4: studentDetails.SubValue_4 || '',
+//     SubValue_5: studentDetails.SubValue_5 || '',
+//     SubValue_6: studentDetails.SubValue_6 || '',
+//     SubValue_7: studentDetails.SubValue_7 || '',
+//     SubValue_8: studentDetails.SubValue_8 || '',
+//     Total: studentDetails.Total || '',
+//     Division: studentDetails.Division || ''
+// })
+
+const studentsub = ref({
+    SubLabel_1: studentDetails.SubLabel_1 || '',
+    SubLabel_2: studentDetails.SubLabel_2 || '',
+    SubLabel_3: studentDetails.SubLabel_3 || '',
+    SubLabel_4: studentDetails.SubLabel_4 || '',
+    SubLabel_5: studentDetails.SubLabel_5 || '',
+    SubLabel_6: studentDetails.SubLabel_6 || '',
+    SubLabel_7: studentDetails.SubLabel_7 || '',
+    SubLabel_8: studentDetails.SubLabel_8 || '',
+    Total: studentDetails.Total || '',
+    Division: studentDetails.Division || ''
+})
+
+
+const getSubjectData = computed(() => {
+    if (!searchResults.value?.data?.[0]) return [];
+
+    return Array.from({ length: 8 }, (_, i) => ({
+        name: searchResults.value.data[0][`SubLabel_${i + 1}`],
+        value: searchResults.value.data[0][`SubValue_${i + 1}`]
+    }));
+});
+
+
+// const getSubjects = (student) => {
+//   return student?.SRType === 0 ? femaleSubjects : maleSubjects;
+// };
+
+
+const getSubjectCount = (student) => {
+    let count = 0;
+    for (let i = 1; i <= 8; i++) {
+        if (student[`SubLabel_${i}`]) count++;
+    }
+    return count || 8; // Default to 8 if count is 0
 };
-
-
-
 
 
 
@@ -101,7 +145,7 @@ const getGrade = (marks) => {
     if (numericMarks >= 70) return 'জায়্যিদ জিদ্দান';
     if (numericMarks >= 60) return 'জায়্যিদ';
     if (numericMarks >= 33) return 'মকবুল';
-    return 'F';
+    return 'ফেল';
 }
 
 const search = () => {
@@ -113,7 +157,10 @@ const search = () => {
     router.get(route('find_result.studentResultFind'), form.value, {
         preserveState: true,
         preserveScroll: true,
-        only: ['searchResults']
+        only: ['searchResults'],
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest'
+        }
     });
 };
 
@@ -262,23 +309,23 @@ const downloadPDF = () => {
         <div class="space-y-4">
             <div class="flex justify-between border-b pb-2 text-black">
                 <span class="font-semibold">নাম:</span>
-                <span>{{ student.Name }}</span>
+                <span class="font-semibold">{{ student.Name }}</span>
             </div>
             <div class="flex justify-between border-b pb-2 text-black">
                 <span class="font-semibold">পিতার নাম:</span>
-                <span>{{ student.Father}}</span>
+                <span class="font-semibold">{{ student.Father}}</span>
             </div>
             <div class="flex justify-between border-b pb-2 text-black">
                 <span class="font-semibold">রোল নম্বর:</span>
-                <span>{{ student.Roll }}</span>
+                <span class="font-semibold">{{ student.Roll }}</span>
             </div>
             <div class="flex justify-between border-b pb-2 text-black">
                 <span class="font-semibold">রেজিস্ট্রেশন নম্বর:</span>
-                <span>{{ student.reg_id }}</span>
+                <span class="font-semibold">{{ student.reg_id }}</span>
             </div>
             <div class="flex justify-between border-b pb-2 text-black">
                 <span class="font-semibold">মাদরাসার নাম:</span>
-                <span>{{ student.Madrasha }}</span>
+                <span class="font-semibold">{{ student.Madrasha }}</span>
             </div>
         </div>
 
@@ -306,7 +353,7 @@ const downloadPDF = () => {
 
                     <div class="flex justify-between text-black">
                         <span class="font-semibold">মেধা তালিকা:</span>
-                        <span class="font-bold">{{(student.Positions) }}তম</span>
+                        <span class="font-bold">{{(student.Positions) }} তম</span>
                     </div>
                 </div>
             </div>
@@ -326,18 +373,20 @@ const downloadPDF = () => {
                         <th class="px-4 py-2 text-center">গ্রেড</th>
                     </tr>
                 </thead>
-                <tbody class="divide-y text-black font-semibold" >
-<tr v-for="(subject, index) in getSubjects(searchResults?.data?.[0])" :key="index">
-<td class="px-4 py-2">{{ subject.name }}</td>
-<td class="px-4 py-2 text-center">১০০</td>
-<td class="px-4 py-2 text-center font-semibold">
-{{ searchResults?.data?.[0]?.[`SubValue_${index + 1}`] }}
-</td>
-<td class="px-4 py-2 text-center font-semibold">
-{{ getGrade(searchResults?.data?.[0]?.[`SubValue_${index + 1}`]) }}
-</td>
-</tr>
+                <tbody class="divide-y text-black font-semibold">
+    <tr v-for="index in getSubjectCount(student)" :key="index">
+        <td class="px-4 py-2">{{ student[`SubLabel_${index}`] }}</td>
+        <td class="px-4 py-2 text-center">১০০</td>
+        <td class="px-4 py-2 text-center font-semibold">
+            {{ student[`SubValue_${index}`] }}
+        </td>
+        <td class="px-4 py-2 text-center font-semibold">
+            {{ getGrade(student[`SubValue_${index}`]) }}
+        </td>
+    </tr>
 </tbody>
+
+
             </table>
         </div>
     </div>

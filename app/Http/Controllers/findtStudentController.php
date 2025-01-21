@@ -6,33 +6,67 @@ use App\Models\student;
 use App\Models\students_number_potrro;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use MirazMac\BanglaString\Translator\BijoyToAvro\Translator;
+
+
+
+
+
+
 class findtStudentController extends Controller
 {
 
 
 
 
+
     public function search(Request $request)
     {
-        $years = students_number_potrro::select('years')
-            ->distinct()
+        $years = student::distinct()
             ->orderBy('years', 'desc')
             ->pluck('years');
 
         $marhalas = [
+            1 => 'তাকমিল',
             2 => 'ফযিলত',
             3 => 'সানাবিয়া উলইয়া',
+            4 => 'সানাবিয়া',
+            5 => 'মুতায়াসসিতা',
+            6 => 'ইবতেদাইয়্যা',
+            7 => 'হিফজুল কোরান',
+            8 => 'ইলমুল কিরাত',
         ];
 
         $results = [];
 
         if ($request->filled(['CID', 'years', 'Roll', 'reg_id'])) {
-            $results = students_number_potrro::where([
+            $translator = new Translator();
+
+            $results = student::where([
                 'CID' => $request->CID,
                 'years' => $request->years,
                 'Roll' => $request->Roll,
                 'reg_id' => $request->reg_id,
-            ])->get();
+            ])->get()->map(function ($student) use ($translator) {
+                // Convert Bijoy to Unicode using the correct method
+                $student->Name = $translator->translate($student->Name);
+                $student->Father = $translator->translate($student->Father);
+                $student->Madrasha = $translator->translate($student->Madrasha);
+                $student->Division = $translator->translate($student->Division);
+                $student->Roll = $translator->translate($student->Roll);
+                $student->reg_id = $translator->translate($student->reg_id);
+                $student->Total = $translator->translate($student->Total);
+                $student->Positions = $translator->translate($student->Positions);
+
+                for ($i = 1; $i <= 8; $i++) {
+                    $labelKey = "SubLabel_" .  $i;
+                    if (!empty($student->$labelKey)) {
+                        $student->$labelKey = $translator->translate($student->$labelKey);
+                    }
+                }
+
+                return $student;
+            });
         }
 
         return Inertia::render('find_result/studentResultFind', [
@@ -49,22 +83,28 @@ class findtStudentController extends Controller
 
     public function marhalaFind(Request $request)
     {
-        $years = students_number_potrro::select('years')
+        $years = student::select('years')
             ->distinct()
             ->orderBy('years', 'desc')
             ->pluck('years');
 
         $marhalas = [
+            1 => 'তাকমিল',
             2 => 'ফযিলত',
             3 => 'সানাবিয়া উলইয়া',
+            4 => 'সানাবিয়া',
+            5 => 'মুতায়াসসিতা',
+            6 => 'ইবতেদাইয়্যা',
+            7 => 'হিফজুল কোরান',
+            7 => 'ইলমুল কিরাত',
         ];
 
         $results = [];
 
-        if ($request->CID && $request->years && $request->Elhaq) {
-            $results = students_number_potrro::where('CID', $request->CID)
+        if ($request->CID && $request->years && $request->MElhaq) {
+            $results = student::where('CID', $request->CID)
                 ->where('years', $request->years)
-                ->where('Elhaq', $request->Elhaq)
+                ->where('MElhaq', $request->MElhaq)
                 ->orderBy('Roll', 'asc')
                 ->paginate(10); // Paginate with 10 results per page
         }

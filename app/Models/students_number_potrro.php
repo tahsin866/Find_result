@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use App\Models\student;
 use App\Models\madrasha;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-
+use Illuminate\Database\Eloquent\Relations\HasMany;
 class students_number_potrro extends Model
 {
 
@@ -32,12 +32,10 @@ class students_number_potrro extends Model
     public $timestamps = false; // Add this if you don't have timestamp columns
 
 
-public function student(): HasOne
- {
-
-    return $this->hasOne(student::class, 'Roll', 'Roll')  // foreign key and local key
-                ->where('years', $this->years);
- }
+    public function students(): HasMany
+    {
+        return $this->hasMany(Student::class, 'MID', 'MID');
+    }
 
 
 
