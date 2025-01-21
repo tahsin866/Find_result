@@ -13,8 +13,7 @@ const props = defineProps({
   studentDetails: Object
 });
 
-const searchResults = props.searchResults || { data: [], last_page: 1 };
-
+const searchResults = ref(props.searchResults || { data: [], last_page: 1 });
 
 const studentDetails = props.studentDetails || {};
 
@@ -23,7 +22,7 @@ const form = ref({
     years: '',
     Roll: '',
     reg_id: '',
-    Elhaq: ''  // Add this property
+    MElhaq: ''  // Add this property
 });
 
 
@@ -69,23 +68,23 @@ const form = ref({
 
 
 const maleSubjects = [
-  { name: 'মিশকাতুল মাসাবিহ (প্রথম খন্ড)' },
+  { name: 'মিশকাতুল মাসাবিহ (১ খন্ড)' },
   { name: 'তাফসীরে বায়দাভী' },
   { name: 'শরহুল আকায়েদ ও ফিরাকুল বাতিলা' },
-  { name: 'মিশকাতুল মাসাবিহ (দ্বিতীয় খন্ড)' },
-  { name: 'হেদায়া (তৃতীয় খন্ড)' },
-  { name: 'হেদায়া (চতুর্থ খন্ড)' },
+  { name: 'মিশকাতুল মাসাবিহ (২ খন্ড)' },
+  { name: 'হেদায়া (৩ খন্ড)' },
+  { name: 'হেদায়া (৪ খন্ড)' },
   { name: 'নুযহাতুন নযর' },
   { name: 'তাহরীকে দারুল উলূম দেওবন্দ' }
 ];
 
 const femaleSubjects = [
-  { name: 'মিশকাতুল মাসাবিহ (প্রথম খন্ড)' },
-  { name: 'তাফসীরে জালালাইন (প্রথম খন্ড)' },
-  { name: 'তাফসীরে জালালাইন (দ্বিতীয় খন্ড)' },
-  { name: 'মিশকাতুল মাসাবিহ (দ্বিতীয় খন্ড)' },
-  { name: 'হেদায়া (তৃতীয় খন্ড)' },
-  { name: 'হেদায়া (চতুর্থ খন্ড)' },
+  { name: 'মিশকাতুল মাসাবিহ (১ খন্ড)' },
+  { name: 'তাফসীরে জালালাইন (১ খন্ড)' },
+  { name: 'তাফসীরে জালালাইন (২ খন্ড)' },
+  { name: 'মিশকাতুল মাসাবিহ (২ খন্ড)' },
+  { name: 'হেদায়া (৩ খন্ড)' },
+  { name: 'হেদায়া (৪ খন্ড)' },
   { name: 'আকীদাতুত তাহাবী' }
 ];
 
@@ -149,39 +148,50 @@ const search = () => {
         alert('বছর নির্বাচন করুন');
         return;
     }
-    if (!form.value.Elhaq) {
+    if (!form.value.MElhaq) {
         alert('রোল নম্বর লিখুন');
         return;
     }
 
+    // Clear existing results before search
+    searchResults.value = { data: [], last_page: 1 };
+
     router.get(route('find_result.marhalawariFindResult'), {
         CID: form.value.CID,
         years: form.value.years,
-        Elhaq: form.value.Elhaq
+        MElhaq: form.value.MElhaq
     }, {
         preserveState: true,
-        preserveScroll: true
+        preserveScroll: true,
+        onSuccess: (page) => {
+            searchResults.value = page.props.searchResults;
+        }
     });
 };
 
 
 
 const fetchPage = (page) => {
-    if (page > 0 && page <= searchResults.last_page) {
-        Inertia.visit(route('find_result.marhalawariFindResult'), {
-            method: 'get',
-            data: {
-                CID: form.value.CID,
-                years: form.value.years,
-                Elhaq: form.value.Elhaq,
-                page: page
-            },
-            preserveState: true,
-            replace: true,
-            only: ['searchResults']  // Only update specific data without full reload
-        });
-    }
+    router.get(route('find_result.marhalawariFindResult'), {
+        CID: form.value.CID,
+        years: form.value.years,
+        MElhaq: form.value.MElhaq,
+        page: page
+    }, {
+        preserveState: true,
+        preserveScroll: true,
+        onSuccess: (response) => {
+            searchResults.value = response.props.searchResults;
+        }
+    });
 };
+
+
+
+
+
+
+
 
 </script>
 
@@ -242,7 +252,7 @@ const fetchPage = (page) => {
         <div>
             <label class="block text-black mb-2 font-semibold">ইলহাক নম্বর দিন</label>
             <input
-                v-model="form.Elhaq"
+                v-model="form.MElhaq"
                 type="text"
                 placeholder="রোল নম্বর লিখুন"
                 class="w-full border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-[#004D40] text-black"
@@ -260,7 +270,7 @@ const fetchPage = (page) => {
 
             <!-- Results Section -->
 <!-- Results Section -->
-<div v-if="searchResults?.data && searchResults.data.length > 0" class="bg-white rounded-md shadow-xl p-6 relative">
+<div v-if="searchResults?.data?.length > 0" class="bg-white rounded-md shadow-xl p-6 relative">
     <!-- Action Buttons -->
     <div class="absolute top-6 right-6 flex space-x-4">
         <button
@@ -285,26 +295,34 @@ const fetchPage = (page) => {
     </div>
 
     <!-- Madrasa Information -->
-    <div class="mb-8">
-        <h3 class="text-2xl font-bold text-[#1a237e] mb-4">মাদরাসার তথ্য</h3>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div class="space-y-4">
-                <div class="flex justify-between border-b pb-2 text-black">
-                    <span class="font-semibold">মাদরাসার নাম:</span>
-                    <span>{{ searchResults.data[0]?.Madrasha }}</span>
-                </div>
-                <div class="flex justify-between border-b pb-2 text-black">
-                    <span class="font-semibold">ইলহাক নম্বর:</span>
-                    <span>{{ searchResults.data[0]?.Elhaq }}</span>
-                </div>
-                <div class="flex justify-between border-b pb-2 text-black">
-                    <span class="font-semibold">মারহালা:</span>
-                    <span>{{ searchResults.data[0]?.Class }}</span>
-                </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-20 mb-10">
+
+        <div class="space-y-4">
+            <div class="flex justify-between border-b pb-2 text-black">
+                <span class="font-semibold">মাদরাসা  নাম:</span>
+                <span>{{ searchResults.data[0]?.Madrasha }}</span>
             </div>
+            <div class="flex justify-between border-b pb-2 text-black">
+                <span class="font-semibold">ইলহাক:</span>
+                <span>{{ searchResults.data[0]?.MElhaq }}</span>
+            </div>
+            <div class="flex justify-between border-b pb-2 text-black">
+                <span class="font-semibold">ক্লাস:</span>
+                <span>{{ searchResults.data[0]?.Class }}</span>
+            </div>
+            <div class="flex justify-between border-b pb-2 text-black">
+                <span class="font-semibold">শিক্ষাবর্ষ:</span>
+                <span>{{ searchResults.data[0]?.years }}</span>
+            </div>
+            <!-- <div class="flex justify-between border-b pb-2 text-black">
+                <span class="font-semibold">মাদরাসার নাম:</span>
+                <span>{{ student.Madrasha }}</span>
+            </div> -->
         </div>
-    </div>
-    <!-- <div class="space-y-4">
+
+        <!-- Result Information -->
+        <div class="space-y-4">
             <div class="bg-gray-50 p-4 rounded-lg">
                 <h3 class="text-xl font-bold text-black mb-4">ফলাফল সারসংক্ষেপ</h3>
                 <div class="space-y-2">
@@ -314,24 +332,40 @@ const fetchPage = (page) => {
                     </div>
                     <div class="flex justify-between text-black">
                         <span class="font-semibold">প্রাপ্ত নম্বর:</span>
-                        <span>{{ student.Total }}</span>
+                        <span>{{ searchResults.data[0]?.Madrasha }}</span>
                     </div>
                     <div class="flex justify-between text-black">
                         <span class="font-semibold">শতকরা হার:</span>
-                        <span>{{(student.Total)/8 }}</span>
+                        <span>{{ searchResults.data[0]?.Madrasha }}</span>
                     </div>
                     <div class="flex justify-between text-black">
                         <span class="font-semibold">বিভাগ:</span>
-                        <span class="font-bold">{{(student.Division) }}</span>
+                        <span class="font-bold">{{ searchResults.data[0]?.Madrasha }}</span>
                     </div>
 
                     <div class="flex justify-between text-black">
                         <span class="font-semibold">মেধা তালিকা:</span>
-                        <span class="font-bold">{{(student.Positions) }}তম</span>
+                        <span class="font-bold">{{ searchResults.data[0]?.Madrasha }}</span>
                     </div>
                 </div>
             </div>
-        </div> -->
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     <!-- Students Results Table -->
@@ -365,29 +399,47 @@ const fetchPage = (page) => {
     </div>
 
     <!-- Pagination -->
-    <div class="mt-6 flex items-center justify-center space-x-2">
+    <div class="mt-8 flex items-center justify-center">
+    <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
+        <!-- Previous Page Button -->
         <button
             @click="fetchPage(searchResults.current_page - 1)"
-            :disabled="!searchResults.prev_page_url"
-            class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 disabled:opacity-50">
-            পূর্ববর্তী
+            :disabled="searchResults.current_page === 1"
+            class="relative inline-flex items-center px-4 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+            <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
+            </svg>
+            <span class="ml-2">পূর্ববর্তী</span>
         </button>
-        <span class="text-gray-700">পৃষ্ঠা {{ searchResults.current_page }} এর {{ searchResults.last_page }}</span>
+
+        <!-- Page Info -->
+        <span class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium">
+            পৃষ্ঠা {{ searchResults.current_page }} এর {{ searchResults.last_page }}
+        </span>
+
+        <!-- Next Page Button -->
         <button
             @click="fetchPage(searchResults.current_page + 1)"
-            :disabled="!searchResults.next_page_url"
-            class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 disabled:opacity-50">
-            পরবর্তী
+            :disabled="searchResults.current_page >= searchResults.last_page"
+            class="relative inline-flex items-center px-4 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+            <span class="mr-2">পরবর্তী</span>
+            <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+            </svg>
         </button>
-    </div>
+    </nav>
+</div>
+
+
 </div>
 
 
 <!-- No Results Message -->
-<div v-else-if="form.CID && form.years && form.Elhaq" class="bg-white rounded-md shadow-xl p-6 text-center py-8">
+<!-- <div v-else-if="searchResults?.data && searchResults.data.length === 0" class="bg-white rounded-md shadow-xl p-6 text-center py-8">
     <p class="text-xl text-gray-600">কোন ফলাফল পাওয়া যায়নি</p>
-</div>
-
+</div> -->
         </main>
 
 

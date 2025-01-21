@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\findtStudentController;
+use App\Http\Controllers\PDFController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -34,6 +35,11 @@ Route::get('find_result/studentResultFind', [findtStudentController::class, 'sea
     ->name('find_result.marhalawariFindResult');
     // Route::get('/find_result/studentResultFind/{Roll}/{reg_id}', [findtStudentController::class, 'search'])->name('find_result.studentResultFind');
 
+
+
+
+    Route::get('/print-pdf/{Roll}/{reg_id}', [findtStudentController::class, 'generatePdf'])
+    ->name('printPdf');
 
 
 

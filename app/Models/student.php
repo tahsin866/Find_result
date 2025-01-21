@@ -24,7 +24,10 @@ protected $table ='students';
         return $this->belongsTo(Madrasha::class, 'MID', 'id');
     }
 
-
+    public function numberPotrro(): BelongsTo
+    {
+        return $this->belongsTo(students_number_potrro::class, 'MID', 'MID');
+    }
 
 
 
