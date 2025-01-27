@@ -36,10 +36,11 @@ Route::get('find_result/studentResultFind', [findtStudentController::class, 'sea
     // Route::get('/find_result/studentResultFind/{Roll}/{reg_id}', [findtStudentController::class, 'search'])->name('find_result.studentResultFind');
 
 
+    // Route::get('/find-result/student-result/{Roll}/{reg_id}/pdf', [findtStudentController::class, 'generatePdf'])
+    // ->name('find_result.student_result.pdf');
 
-
-    Route::get('/print-pdf/{Roll}/{reg_id}', [findtStudentController::class, 'generatePdf'])
-    ->name('printPdf');
+    Route::get('/find-result/student-result/{Roll}/{reg_id}/pdf/{action?}', [findtStudentController::class, 'generatePdf'])
+    ->name('find_result.student_result.pdf');
 
 
 
