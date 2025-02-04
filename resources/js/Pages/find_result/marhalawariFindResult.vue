@@ -183,7 +183,7 @@ const quickSearch = (type) => {
 
     <div style="font-family: 'Merriweather','SolaimanLipi',sans-serif;" class="min-h-screen bg-gray-50">
         <!-- Header -->
-        <header class="bg-[#727D73] shadow-lg">
+        <header class="bg-[#2C5A63] shadow-lg">
     <div class="container mx-auto px-6 py-4">
         <div class="flex flex-col md:flex-row justify-between items-center">
             <div class="w-full text-center mb-4 md:mb-0">
@@ -216,7 +216,7 @@ const quickSearch = (type) => {
 
         <div class="flex gap-4">
             <button
-    class="flex items-center gap-2 bg-[#004D40] text-white px-4 py-2 rounded-md hover:bg-[#00695C] transition"
+    class="flex items-center gap-2 bg-[#004D40] text-white px-4 py-2 rounded-md hover:bg-[#2C5A63] transition"
     @click="router.get(route('find_result.studentResultFind'))"
 >
     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -230,7 +230,7 @@ const quickSearch = (type) => {
 
 
             <button
-    class="flex items-center gap-2 bg-[#727D73] text-white px-4 py-2 rounded-md hover:bg-[#727D73] transition"
+    class="flex items-center gap-2 bg-[#2C5A63] text-white px-4 py-2 rounded-md hover:bg-[#2C5A63] transition"
     @click="quickSearch('popular')"
 >
     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">

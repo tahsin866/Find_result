@@ -105,7 +105,7 @@ const quickSearch = (type) => {
 
     <div style="font-family: 'Merriweather','SolaimanLipi',sans-serif;" class="min-h-screen bg-gray-50">
         <!-- Header -->
-        <header class="bg-[#727D73] shadow-lg">
+        <header class="bg-[#2C5A63] shadow-lg">
             <div class="container mx-auto px-6 py-4">
                 <div class="flex flex-col md:flex-row justify-between items-center">
                     <div class="w-full text-center mb-4 md:mb-0">
@@ -116,7 +116,7 @@ const quickSearch = (type) => {
                     </div>
                     <nav v-if="canLogin">
                         <Link v-if="$page.props.auth.user" :href="route('dashboard')"
-                            class="bg-white text-[#727D73] px-6 py-2 rounded hover:bg-gray-100 transition-colors">
+                            class="bg-white text-[#2C5A63] px-6 py-2 rounded hover:bg-gray-100 transition-colors">
                         ড্যাশবোর্ড
                         </Link>
                     </nav>
@@ -131,7 +131,7 @@ const quickSearch = (type) => {
             <div class="bg-white rounded-lg shadow-sm p-6 mb-8">
     <!-- Header with Quick Access Buttons -->
     <div class="mb-6 flex justify-between items-center">
-        <h2 class="text-2xl font-bold text-[#727D73]">ব্যক্তিগত ফলাফল অনুসন্ধান</h2>
+        <h2 class="text-2xl font-bold text-[#2C5A63]">ব্যক্তিগত ফলাফল অনুসন্ধান</h2>
 
         <div class="flex gap-4">
             <button
@@ -146,7 +146,7 @@ const quickSearch = (type) => {
 
 
             <button
-    class="flex items-center gap-2 bg-[#727D73] text-white px-4 py-2 rounded-md hover:bg-[#283593] transition"
+    class="flex items-center gap-2 bg-[#2C5A63] text-white px-4 py-2 rounded-md hover:bg-[#283593] transition"
     @click="quickSearch('popular')"
 >
     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -212,7 +212,7 @@ const quickSearch = (type) => {
 
                 <div class="mt-6 text-right">
                     <button @click="search"
-                        class="bg-[#727D73] text-white px-8 py-2 rounded-md hover:bg-[#727D73] transition-colors">
+                        class="bg-[#2C5A63] text-white px-8 py-2 rounded-md hover:bg-[#2C5A63] transition-colors">
                         ফলাফল খুঁজুন
                     </button>
                 </div>
