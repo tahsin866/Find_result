@@ -27,104 +27,20 @@ const form = ref({
 
 
 
-
-// const maleSubjects = [
-//     { name: 'مشكوة المصابيح (الجزء الأول)' },
-//     { name: 'تفسير البيضاوي' },
-//     { name: 'شرح العقائد و الفرق الباطلة' },
-//     { name: 'مشكوة المصابيح (الجزء الثاني)' },
-//     { name: 'الهداية (الجزء الثالث)' },
-//     { name: 'الهداية (الجزء الرابع)' },
-//     { name: 'نزهة النظر في شرح نخبة الفكر' },
-//     { name: 'تحريك دار العلوم ديوبند' }
-// ];
-
-// const femaleSubjects = [
-//     { name: 'مشكوة المصابيح (الجزء الأول)' },
-//     { name: 'تفسيرجلالين (الجزء الأول)' },
-//     { name: 'تفسيرجلالين (الجزء الثاني)' },
-//     { name: 'مشكوة المصابيح (الجزء الثاني)' },
-//     { name: 'الهداية (الجزء الثالث)' },
-//     { name: 'الهداية (الجزء الرابع)' },
-//     { name: 'عقيدة الطحاوي' }
-// ];
-
-// const currentSubjects = computed(() => {
-//     return studentDetails.SRType === 0 ? femaleSubjects : maleSubjects;
-// });
-
-// const studentResults = ref({
-//     SubValue_1: studentDetails.SubValue_1 || '',
-//     SubValue_2: studentDetails.SubValue_2 || '',
-//     SubValue_3: studentDetails.SubValue_3 || '',
-//     SubValue_4: studentDetails.SubValue_4 || '',
-//     SubValue_5: studentDetails.SubValue_5 || '',
-//     SubValue_6: studentDetails.SubValue_6 || '',
-//     SubValue_7: studentDetails.SubValue_7 || '',
-//     SubValue_8: studentDetails.SubValue_8 || '',
-//     Total: studentDetails.Total || '',
-//     Division: studentDetails.Division || ''
-// });
-
-
-const maleSubjects = [
-  { name: 'মিশকাতুল মাসাবিহ (১ খন্ড)' },
-  { name: 'তাফসীরে বায়দাভী' },
-  { name: 'শরহুল আকায়েদ ও ফিরাকুল বাতিলা' },
-  { name: 'মিশকাতুল মাসাবিহ (২ খন্ড)' },
-  { name: 'হেদায়া (৩ খন্ড)' },
-  { name: 'হেদায়া (৪ খন্ড)' },
-  { name: 'নুযহাতুন নযর' },
-  { name: 'তাহরীকে দারুল উলূম দেওবন্দ' }
-];
-
-const femaleSubjects = [
-  { name: 'মিশকাতুল মাসাবিহ (১ খন্ড)' },
-  { name: 'তাফসীরে জালালাইন (১ খন্ড)' },
-  { name: 'তাফসীরে জালালাইন (২ খন্ড)' },
-  { name: 'মিশকাতুল মাসাবিহ (২ খন্ড)' },
-  { name: 'হেদায়া (৩ খন্ড)' },
-  { name: 'হেদায়া (৪ খন্ড)' },
-  { name: 'আকীদাতুত তাহাবী' }
-];
-
 const getSubjects = (student) => {
-  return student?.SRType === 0 ? femaleSubjects : maleSubjects;
+  const subjects = [];
+  for (let i = 1; i <= 8; i++) {
+    if (student[`SubLabel_${i}`]) {
+      subjects.push({
+        name: student[`SubLabel_${i}`],
+        marks: student[`SubValue_${i}`]
+      });
+    }
+  }
+  return subjects;
 };
 
 
-
-
-
-
-const getGrade = (marks) => {
-    if (!marks) return 'N/A';
-    const numericMarks = Number(marks);
-    if (numericMarks >= 80) return 'মুমতাজ';
-    if (numericMarks >= 70) return 'জায়্যিদ জিদ্দান';
-    if (numericMarks >= 60) return 'জায়্যিদ';
-    if (numericMarks >= 33) return 'মকবুল';
-    return 'F';
-}
-
-// const search = () => {
-//     if (!form.value.CID || !form.value.years || !form.value.Elhaq) {
-//         alert('Please fill all required fields');
-//         return;
-//     }
-
-//     router.get(route('find_result.studentResultFind'), form.value, {
-//         preserveState: true,
-//         preserveScroll: true,
-//         only: ['searchResults']
-//     });
-// };
-
-
-// Function to calculate percentage
-// const calculatePercentage = (obtained, total) => {
-//     return ((obtained / total) * 100).toFixed(2);
-// };
 
 const downloadPDF = () => {
     const element = document.querySelector('.bg-white');
@@ -139,44 +55,54 @@ const downloadPDF = () => {
     html2pdf().set(opt).from(element).save();
 };
 
-const search = () => {
-    if (!form.value.CID) {
-        alert('মারহালা নির্বাচন করুন');
-        return;
-    }
-    if (!form.value.years) {
-        alert('বছর নির্বাচন করুন');
-        return;
-    }
-    if (!form.value.MElhaq) {
-        alert('রোল নম্বর লিখুন');
-        return;
-    }
+// const search = () => {
+//     if (!form.value.CID) {
+//         alert('মারহালা নির্বাচন করুন');
+//         return;
+//     }
+//     if (!form.value.years) {
+//         alert('বছর নির্বাচন করুন');
+//         return;
+//     }
+//     if (!form.value.MElhaq) {
+//         alert('রোল নম্বর লিখুন');
+//         return;
+//     }
 
-    // Clear existing results before search
-    searchResults.value = { data: [], last_page: 1 };
+//     // Clear existing results before search
+//     searchResults.value = { data: [], last_page: 1 };
 
-    router.get(route('find_result.marhalawariFindResult'), {
-        CID: form.value.CID,
-        years: form.value.years,
-        MElhaq: form.value.MElhaq
-    }, {
-        preserveState: true,
-        preserveScroll: true,
-        onSuccess: (page) => {
-            searchResults.value = page.props.searchResults;
-        }
-    });
+//     router.get(route('find_result.marhalawariFindResult'), {
+//         CID: form.value.CID,
+//         years: form.value.years,
+//         MElhaq: form.value.MElhaq
+//     }, {
+//         preserveState: true,
+//         preserveScroll: true,
+//         onSuccess: (page) => {
+//             searchResults.value = page.props.searchResults;
+//         }
+//     });
+// };
+
+
+const pageSize = ref(10);
+const currentPage = ref(1);
+
+// Modified changePageSize function
+const changePageSize = () => {
+    currentPage.value = 1; // Reset to first page
+    fetchResults(); // Fetch with new page size
 };
 
-
-
-const fetchPage = (page) => {
+// New consolidated fetch function
+const fetchResults = () => {
     router.get(route('find_result.marhalawariFindResult'), {
         CID: form.value.CID,
         years: form.value.years,
         MElhaq: form.value.MElhaq,
-        page: page
+        page: currentPage.value,
+        per_page: pageSize.value
     }, {
         preserveState: true,
         preserveScroll: true,
@@ -186,7 +112,60 @@ const fetchPage = (page) => {
     });
 };
 
+// Modified fetchPage function
+const fetchPage = (page) => {
+    currentPage.value = page;
+    fetchResults();
+};
 
+
+
+// Update the search function to include pagination params
+const search = () => {
+  if (!form.value.CID) {
+    alert('মারহালা নির্বাচন করুন');
+    return;
+  }
+  if (!form.value.years) {
+    alert('বছর নির্বাচন করুন');
+    return;
+  }
+  if (!form.value.MElhaq) {
+    alert('রোল নম্বর লিখুন');
+    return;
+  }
+
+  router.get(route('find_result.marhalawariFindResult'), {
+    CID: form.value.CID,
+    years: form.value.years,
+    MElhaq: form.value.MElhaq,
+    page: 1,
+    per_page: pageSize.value
+  }, {
+    preserveState: true,
+    preserveScroll: true,
+    onSuccess: (page) => {
+      searchResults.value = page.props.searchResults;
+    }
+  });
+};
+
+
+
+
+
+
+
+
+
+
+
+const quickSearch = (type) => {
+    if (type === 'recent') {
+        router.get(route('find_result.studentResultFind'));
+    }
+    // ... other conditions
+};
 
 
 
@@ -204,7 +183,7 @@ const fetchPage = (page) => {
 
     <div style="font-family: 'Merriweather','SolaimanLipi',sans-serif;" class="min-h-screen bg-gray-50">
         <!-- Header -->
-        <header class="bg-[#1a237e] shadow-lg">
+        <header class="bg-[#2C5A63] shadow-lg">
     <div class="container mx-auto px-6 py-4">
         <div class="flex flex-col md:flex-row justify-between items-center">
             <div class="w-full text-center mb-4 md:mb-0">
@@ -216,7 +195,7 @@ const fetchPage = (page) => {
                 <Link
                     v-if="$page.props.auth.user"
                     :href="route('dashboard')"
-                    class="bg-white text-[#1a237e] px-6 py-2 rounded hover:bg-gray-100 transition-colors"
+                    class="bg-white text-[#727D73] px-6 py-2 rounded hover:bg-gray-100 transition-colors"
                 >
                     ড্যাশবোর্ড
                 </Link>
@@ -230,6 +209,40 @@ const fetchPage = (page) => {
         <main class="container mx-auto px-4 py-8">
             <!-- Search Form -->
             <div class="bg-white rounded-lg shadow-sm p-6 mb-8">
+
+
+                <div class="mb-6 flex justify-between items-center">
+        <h2 class="text-2xl font-bold text-[#727D73]">মারহালাওয়ারী ফলাফল অনুসন্ধান</h2>
+
+        <div class="flex gap-4">
+            <button
+    class="flex items-center gap-2 bg-[#004D40] text-white px-4 py-2 rounded-md hover:bg-[#2C5A63] transition"
+    @click="router.get(route('find_result.studentResultFind'))"
+>
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+        />
+    </svg>
+    ব্যক্তিগত ফলাফল
+</button>
+
+
+
+            <button
+    class="flex items-center gap-2 bg-[#2C5A63] text-white px-4 py-2 rounded-md hover:bg-[#2C5A63] transition"
+    @click="quickSearch('popular')"
+>
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"
+        />
+    </svg>
+    মেধা তালিকা
+</button>
+
+        </div>
+    </div>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-end">
         <div>
             <label class="block text-gray-700 mb-2 font-semibold">মারহালা নির্বাচন করুন</label>
@@ -260,7 +273,7 @@ const fetchPage = (page) => {
         </div>
 
         <div class="text-right">
-            <button @click="search" class="bg-[#1a237e] text-white px-8 py-2 rounded-md hover:bg-[#283593] transition-colors w-full">
+            <button @click="search" class="bg-[#727D73] text-white px-8 py-2 rounded-md hover:bg-[#727D73] transition-colors w-full">
                 ফলাফল খুঁজুন
             </button>
         </div>
@@ -345,7 +358,7 @@ const fetchPage = (page) => {
 
                     <div class="flex justify-between text-black">
                         <span class="font-semibold">মেধা তালিকা:</span>
-                        <span class="font-bold">{{ searchResults.data[0]?.Madrasha }}</span>
+                        <span class="font-bold">{{ searchResults.data[0]?.Positions }}</span>
                     </div>
                 </div>
             </div>
@@ -373,7 +386,7 @@ const fetchPage = (page) => {
         <table id="resultsTable" class="w-full border border-gray-200 rounded-md">
             <thead class="bg-gray-50 text-black">
                 <tr>
-                    <th class="px-4 py-2 text-left">রোল</th>
+                    <th class="px-4 py-2 text-left">ইলহাক</th>
                     <th class="px-4 py-2 text-left">নাম</th>
                     <th v-for="(subject, index) in getSubjects(searchResults.data[0])"
                         :key="index"
@@ -382,39 +395,67 @@ const fetchPage = (page) => {
                     </th>
                     <th class="px-4 py-2 text-center">মোট</th>
                     <th class="px-4 py-2 text-center">বিভাগ</th>
+                    <th class="px-4 py-2 text-center">মেধা তালিকা</th>
                 </tr>
             </thead>
-            <tbody class="divide-y divide-gray-200 text-black">
-                <tr v-for="student in searchResults.data" :key="student.id">
-                    <td class="px-4 py-2">{{ student.Roll }}</td>
-                    <td class="px-4 py-2">{{ student.Name }}</td>
-                    <td v-for="n in 8" :key="n" class="px-4 py-2 text-center">
-                        {{ student[`SubValue_${n}`] }}
-                    </td>
-                    <td class="px-4 py-2 text-center font-bold">{{ student.Total }}</td>
-                    <td class="px-4 py-2 text-center">{{ student.Division }}</td>
-                </tr>
-            </tbody>
+            <tbody class="divide-y text-black font-semibold">
+  <tr v-for="student in searchResults.data" :key="student.id">
+    <td class="px-4 py-2">{{ student.MElhaq }}</td>
+    <td class="px-4 py-2">{{ student.Name }}</td>
+    <td v-for="(subject, index) in getSubjects(student)"
+        :key="index"
+        class="px-4 py-2 text-center">
+      {{ subject.marks }}
+    </td>
+    <td class="px-4 py-2 text-center">{{ student.Total }}</td>
+    <td class="px-4 py-2 text-center">{{(student.Division) }}</td>
+    <td class="px-4 py-2 text-center">{{(student.Positions) }}</td>
+  </tr>
+</tbody>
+
+
         </table>
     </div>
 
     <!-- Pagination -->
-    <div class="mt-8 flex items-center justify-center">
-    <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
+    <div class="mt-8 flex items-center justify-center gap-4">
+    <!-- Page Size Selector -->
+    <div class="flex items-center gap-2">
+        <label class="text-sm font-medium text-gray-700">প্রতি পৃষ্ঠায়:</label>
+        <select
+            v-model="pageSize"
+            @change="changePageSize"
+            class="border border-gray-300 rounded-md px-2 py-1 text-sm focus:ring-2 focus:ring-[#004D40]"
+        >
+            <option :value="10">10</option>
+            <option :value="20">20</option>
+            <option :value="30">30</option>
+            <option :value="50">50</option>
+        </select>
+    </div>
+
+    <!-- Pagination Controls -->
+    <nav class="relative z-0 inline-flex rounded-md shadow-sm" aria-label="Pagination">
+        <!-- First Page Button -->
+        <button
+            @click="fetchPage(1)"
+            :disabled="searchResults.current_page === 1"
+            class="px-4 py-2 border border-gray-300 bg-white text-sm font-medium hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed rounded-l-md"
+        >
+            প্রথম
+        </button>
+
         <!-- Previous Page Button -->
         <button
             @click="fetchPage(searchResults.current_page - 1)"
             :disabled="searchResults.current_page === 1"
-            class="relative inline-flex items-center px-4 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+            class="px-4 py-2 border border-gray-300 bg-white text-sm font-medium hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
         >
-            <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
-            </svg>
-            <span class="ml-2">পূর্ববর্তী</span>
+            পূর্ববর্তী
         </button>
 
         <!-- Page Info -->
-        <span class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium">
+        <span class="px-4 py-2 border border-gray-300 bg-white text-sm font-medium">
             পৃষ্ঠা {{ searchResults.current_page }} এর {{ searchResults.last_page }}
         </span>
 
@@ -422,12 +463,18 @@ const fetchPage = (page) => {
         <button
             @click="fetchPage(searchResults.current_page + 1)"
             :disabled="searchResults.current_page >= searchResults.last_page"
-            class="relative inline-flex items-center px-4 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+            class="px-4 py-2 border border-gray-300 bg-white text-sm font-medium hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
         >
-            <span class="mr-2">পরবর্তী</span>
-            <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
-            </svg>
+            পরবর্তী
+        </button>
+
+        <!-- Last Page Button -->
+        <button
+            @click="fetchPage(searchResults.last_page)"
+            :disabled="searchResults.current_page >= searchResults.last_page"
+            class="px-4 py-2 border border-gray-300 bg-white text-sm font-medium hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed rounded-r-md"
+        >
+            শেষ
         </button>
     </nav>
 </div>

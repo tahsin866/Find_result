@@ -29,19 +29,37 @@ Route::middleware('auth')->group(function () {
 
 
 Route::get('find_result/studentResultFind', [findtStudentController::class, 'search'])
-    ->name('find_result.studentResultFind');
+    ->name('find_result.studentResultFind')
+    ->middleware('cache.headers:public;max_age=3600;etag');
 
-    Route::get('find_result/marhalawariFindResult', [findtStudentController::class, 'marhalaFind'])
-    ->name('find_result.marhalawariFindResult');
+Route::get('find_result/marhalawariFindResult', [findtStudentController::class, 'marhalaFind'])
+    ->name('find_result.marhalawariFindResult')
+    ->middleware('cache.headers:public;max_age=3600;etag');
+
     // Route::get('/find_result/studentResultFind/{Roll}/{reg_id}', [findtStudentController::class, 'search'])->name('find_result.studentResultFind');
 
 
+    // Route::get('/find-result/student-result/{Roll}/{reg_id}/pdf', [findtStudentController::class, 'generatePdf'])
+    // ->name('find_result.student_result.pdf');
+
+    Route::get('/find-result/student-result/{Roll}/{reg_id}/pdf/{action?}', [findtStudentController::class, 'generatePdf'])
+    ->name('find_result.student_result.pdf');
 
 
-    Route::get('/print-pdf/{Roll}/{reg_id}', [findtStudentController::class, 'generatePdf'])
-    ->name('printPdf');
+    route::get ('uploadResult/resultUpload', function(){
 
+        return inertia::render('uploadResult/resultUpload');
+    });
 
+    route::get ('uploadResult/nazre-sani', function(){
+
+        return inertia::render('uploadResult/nazre-sani');
+    });
+
+    route::get ('uploadResult/useracsess', function(){
+
+        return inertia::render('uploadResult/useracsess');
+    });
 
 
 
