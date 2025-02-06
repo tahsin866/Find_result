@@ -27,7 +27,8 @@
             {{ $student->Roll }}
         </div>
         <div class="custom-font">
-            {{ $student->reg_id }}
+            {{ $student
+            ->reg_id }}
         </div>
     </body>
 </html>
