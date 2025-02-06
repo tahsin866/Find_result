@@ -41,7 +41,7 @@ const chartData = {
       <template #header>
         <div class="flex justify-between items-center bg-[#2C5A63] text-white p-4 rounded-md">
           <h2 class="text-xl font-semibold leading-tight">
-            Result Management Dashboard
+            রেজাল্ট মেনেজমেন্ট ড্যাশবোর্ড
           </h2>
           <div class="flex gap-4">
             <select v-model="selectedYear" class="rounded-md bg-[#3B7682] text-white border-[#234951]">
@@ -83,7 +83,7 @@ const chartData = {
                   </svg>
                 </div>
                 <div class="ml-4">
-                  <p class="text-sm text-white/80">সর্বমোট</p>
+                  <p class="text-sm text-white/80">ফযিলত</p>
                   <p class="text-lg font-semibold text-white">{{ statistics.totalStudents.toLocaleString() }}</p>
                 </div>
               </div>
@@ -96,7 +96,7 @@ const chartData = {
                   </svg>
                 </div>
                 <div class="ml-4">
-                  <p class="text-sm text-white/80">সর্বমোট</p>
+                  <p class="text-sm text-white/80">সানাবিয়া উলইয়া</p>
                   <p class="text-lg font-semibold text-white">{{ statistics.totalStudents.toLocaleString() }}</p>
                 </div>
               </div>
@@ -109,7 +109,7 @@ const chartData = {
                   </svg>
                 </div>
                 <div class="ml-4">
-                  <p class="text-sm text-white/80">সর্বমোট</p>
+                  <p class="text-sm text-white/80">সানাবিয়া</p>
                   <p class="text-lg font-semibold text-white">{{ statistics.totalStudents.toLocaleString() }}</p>
                 </div>
               </div>
@@ -122,7 +122,7 @@ const chartData = {
                   </svg>
                 </div>
                 <div class="ml-4">
-                  <p class="text-sm text-white/80">সর্বমোট</p>
+                  <p class="text-sm text-white/80">মুতাওয়াসসিতা</p>
                   <p class="text-lg font-semibold text-white">{{ statistics.totalStudents.toLocaleString() }}</p>
                 </div>
               </div>
@@ -135,7 +135,7 @@ const chartData = {
                   </svg>
                 </div>
                 <div class="ml-4">
-                  <p class="text-sm text-white/80">সর্বমোট</p>
+                  <p class="text-sm text-white/80">ইবতেদাইয়্যাহ</p>
                   <p class="text-lg font-semibold text-white">{{ statistics.totalStudents.toLocaleString() }}</p>
                 </div>
               </div>
@@ -148,7 +148,7 @@ const chartData = {
                   </svg>
                 </div>
                 <div class="ml-4">
-                  <p class="text-sm text-white/80">সর্বমোট</p>
+                  <p class="text-sm text-white/80">তাহফিজুল কোরান</p>
                   <p class="text-lg font-semibold text-white">{{ statistics.totalStudents.toLocaleString() }}</p>
                 </div>
               </div>
@@ -161,7 +161,7 @@ const chartData = {
                   </svg>
                 </div>
                 <div class="ml-4">
-                  <p class="text-sm text-white/80">সর্বমোট</p>
+                  <p class="text-sm text-white/80">ইলমুত তাজবিদ ওয়াল কিরাআত</p>
                   <p class="text-lg font-semibold text-white">{{ statistics.totalStudents.toLocaleString() }}</p>
                 </div>
               </div>
@@ -169,33 +169,7 @@ const chartData = {
           </div>
 
           <!-- Charts Section -->
-          <div class="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <div class="bg-white p-6 rounded-xl shadow-lg border-l-4 border-[#2C5A63]">
-              <h3 class="text-lg font-semibold mb-4 text-[#2C5A63]">Performance Trends</h3>
-              <Line :data="chartData" :options="{ responsive: true }" />
-            </div>
 
-            <div class="bg-white p-6 rounded-xl shadow-lg border-l-4 border-[#2C5A63]">
-              <h3 class="text-lg font-semibold mb-4 text-[#2C5A63]">Recent Activities</h3>
-              <div class="space-y-4">
-                <div v-for="activity in recentActivities"
-                     class="flex items-center justify-between p-3 hover:bg-[#F0F4F5] rounded-lg border-l-2 border-[#2C5A63]/50">
-                  <!-- Activity content -->
-                  <div v-for="activity in recentActivities" :key="activity.id"
-             class="flex items-center justify-between p-3 hover:bg-gray-50 rounded-lg">
-            <div>
-                <p class="font-medium text-gray-800">{{ activity.action }}</p>
-                <p class="text-sm text-gray-500">{{ activity.details }}</p>
-            </div>
-            <div class="text-right">
-                <p class="text-sm text-gray-500">{{ activity.time }}</p>
-                <p class="text-xs text-gray-400">by {{ activity.user }}</p>
-            </div>
-        </div>
-                </div>
-              </div>
-            </div>
-          </div>
 
           <!-- Quick Actions -->
           <div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">

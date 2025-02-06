@@ -1,5 +1,8 @@
 <script setup>
 import { ref } from 'vue';
+import { Link } from '@inertiajs/vue3'
+import DropdownLink from '@/Components/DropdownLink.vue';
+import Dropdown from '@/Components/Dropdown.vue';
 
 // const showingNavigationDropdown = ref(false);
 // const unreadNotifications = ref(3);
@@ -22,7 +25,7 @@ const sidebarItems = ref([
     {
     name: 'নজরে সানি রেজাল্ট ',
     icon: 'M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z',
-    href: '/GADGET-GEARS/category',
+    href: '/uploadResult/nazre-sani',
 
 },
 
@@ -30,7 +33,7 @@ const sidebarItems = ref([
     {
         name: 'ইউজার একসেস',
         icon: 'M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2',
-        href: '/GADGET-GEARS/order',
+        href: '/uploadResult/useracsess',
 
     },
     {
@@ -62,6 +65,16 @@ const toggleSidebar = () => {
   isSidebarOpen.value = !isSidebarOpen.value
 }
 
+// Add to your existing script setup
+import { router } from '@inertiajs/vue3'
+
+const handleLogout = () => {
+  router.post('/logout', {}, {
+    onSuccess: () => {
+      window.location.href = '/login'
+    }
+  })
+}
 
 
 </script>
@@ -112,40 +125,12 @@ const toggleSidebar = () => {
 
         <!-- Right Navigation Items -->
         <div class="flex items-center space-x-6">
-          <!-- AI Assistant Button -->
-          <button class="btn-secondary flex items-center">
-            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-            </svg>
-            <span>AI Assistant</span>
-          </button>
 
-          <!-- Voice Search -->
-          <div class="relative w-96">
-            <input type="text"
-                   class="w-full rounded-lg border border-gray-200 bg-gray-50 pl-10 pr-12 py-2.5 text-sm text-gray-700 focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
-                   placeholder="Search or use voice command (Press '/')">
-            <div class="absolute left-3 top-2.5">
-              <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-              </svg>
-            </div>
-            <button class="absolute right-3 top-2.5 text-gray-400 hover:text-blue-500">
-              <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
-              </svg>
-            </button>
-          </div>
+<!--
+            <div class="flex-grow text-center">
+    <h1 class="text-2xl font-bold">ওয়েমস রেজাল্ট মেনেজমেন্ট সিস্টেম</h1>
+  </div> -->
 
-          <!-- Quick Actions -->
-          <div class="relative">
-            <button class="btn-primary flex items-center">
-              <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-              </svg>
-              Quick Actions
-            </button>
-          </div>
 
           <!-- Notifications with Live Updates -->
           <button class="relative p-2 text-gray-600 hover:bg-gray-50 rounded-lg transition-colors">
@@ -165,57 +150,35 @@ const toggleSidebar = () => {
           </button>
 
           <!-- Enhanced Profile Dropdown -->
-          <div class="relative">
-            <button @click="showingNavigationDropdown = !showingNavigationDropdown"
-                    class="flex items-center space-x-3 rounded-lg hover:bg-gray-50 p-2 transition-colors">
-              <div class="relative">
-                <img class="h-9 w-9 rounded-full object-cover border-2 border-gray-200"
-                     :src="userProfile.avatar"
-                     alt="Admin">
-                <span class="absolute bottom-0 right-0 h-3 w-3 rounded-full border-2 border-white"
-                      :class="userProfile.status === 'online' ? 'bg-green-400' : 'bg-gray-400'">
-                </span>
-              </div>
-              <div class="hidden md:block text-left">
-                <div class="text-sm font-semibold text-gray-800">{{ userProfile.name }}</div>
-                <div class="text-xs text-gray-500">{{ userProfile.role }}</div>
-              </div>
-            </button>
-
-            <!-- Enhanced Dropdown Menu -->
-            <div v-show="showingNavigationDropdown"
-                 class="absolute right-0 mt-2 w-64 rounded-lg shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100">
-              <div class="p-4">
-                <div class="text-sm font-medium text-gray-900">{{ userProfile.name }}</div>
-                <div class="text-sm text-gray-500">{{ userProfile.email }}</div>
-                <div class="mt-2 text-xs text-gray-500">Last login: {{ userProfile.lastLogin }}</div>
-              </div>
-              <div class="py-1">
-                <a href="/profile" class="group flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">
-                  <svg class="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                  </svg>
-                  Profile Settings
-                </a>
-                <a href="/store" class="group flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">
-                  <svg class="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16" />
-                  </svg>
-                  Store Settings
-                </a>
-              </div>
-              <div class="py-1">
-                <form method="POST" action="/logout">
-                  <button type="submit" class="group flex w-full items-center px-4 py-2 text-sm text-red-600 hover:bg-gray-50">
-                    <svg class="mr-3 h-5 w-5 text-red-400 group-hover:text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-                    </svg>
-                    Sign Out
-                  </button>
-                </form>
-              </div>
-            </div>
-          </div>
+          <Dropdown align="right" width="48">
+                                <template #trigger>
+                                    <span class="inline-flex rounded-md">
+                                        <button
+                                            style=" font-family: 'Merriweather','SolaimanLipi',sans-serif;"
+                                            type="button"
+                                            class="inline-flex items-center px-3 py-2 bg-white dark:bg-gray-800 border border-transparent text-md font leading-4 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300"
+                                        >
+                                            {{ $page.props.auth.user.name }}
+                                            <svg
+                                                class="-me-0.5 ms-2 h-4 w-4"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                viewBox="0 0 20 20"
+                                                fill="currentColor"
+                                            >
+                                                <path
+                                                    fill-rule="evenodd"
+                                                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                                    clip-rule="evenodd"
+                                                />
+                                            </svg>
+                                        </button>
+                                    </span>
+                                </template>
+                                <template #content>
+                                    <DropdownLink :href="route('profile.edit')">Profile</DropdownLink>
+                                    <DropdownLink :href="route('logout')" method="post" as="button">Log Out</DropdownLink>
+                                </template>
+                            </Dropdown>
         </div>
       </div>
     </div>

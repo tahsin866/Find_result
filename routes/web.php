@@ -51,8 +51,15 @@ Route::get('find_result/marhalawariFindResult', [findtStudentController::class, 
         return inertia::render('uploadResult/resultUpload');
     });
 
+    route::get ('uploadResult/nazre-sani', function(){
 
+        return inertia::render('uploadResult/nazre-sani');
+    });
 
+    route::get ('uploadResult/useracsess', function(){
+
+        return inertia::render('uploadResult/useracsess');
+    });
 
 
 
