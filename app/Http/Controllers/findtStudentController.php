@@ -148,6 +148,106 @@ class findtStudentController extends Controller
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+    public function merit_list(Request $request)
+    {
+        $years = student::select('years')
+            ->distinct()
+            ->orderBy('years', 'desc')
+            ->pluck('years');
+
+        $marhalas = [
+            1 => 'তাকমিল',
+            2 => 'ফযিলত',
+            3 => 'সানাবিয়া উলইয়া',
+            4 => 'সানাবিয়া',
+            5 => 'মুতায়াসসিতা',
+            6 => 'ইবতেদাইয়্যা',
+            7 => 'হিফজুল কোরান',
+            8 => 'ইলমুল কিরাত',
+        ];
+
+        $SRtype = [
+            1 => 'ছাত্র',
+            2 => 'ছাত্রী',
+        ];
+
+        $results = [];
+
+        if ($request->CID && $request->years && $request->SRtype) {
+            $translator = new Translator();
+
+            // First, get all students and sort them by total marks
+            $students = student::where('CID', $request->CID)
+                ->where('years', $request->years)
+                ->where('SRtype', $request->SRtype)
+                ->orderBy('Total', 'desc')
+                ->get();
+
+            // Group students by position to handle duplicates
+            $positionGroups = [];
+            foreach ($students as $student) {
+                $position = $student->Positions;
+                if (!isset($positionGroups[$position])) {
+                    $positionGroups[$position] = [];
+                }
+                $positionGroups[$position][] = $student;
+            }
+
+            // Apply suffixes for duplicate positions
+            foreach ($positionGroups as $position => $group) {
+                if (count($group) > 1) {
+                    foreach ($group as $index => $student) {
+                        $suffix = chr(65 + $index); // 65 is ASCII for 'A'
+                        $student->Positions = $student->Positions . $suffix;
+                    }
+                }
+            }
+
+            // Flatten and paginate the results
+            $results = collect($students)->sortBy('Roll')
+                ->paginate(15)
+                ->through(function ($student) use ($translator) {
+                    // Convert Bijoy to Unicode
+                    $student->Madrasha = $translator->translate($student->Madrasha);
+                    $student->Name = $translator->translate($student->Name);
+                    $student->SRtype = $translator->translate($student->SRtype);
+                    $student->Division = $translator->translate($student->Division);
+                    $student->Class = $translator->translate($student->Class);
+                    $student->Positions = $translator->translate($student->Positions);
+
+                    // Translate subject labels
+                    for ($i = 1; $i <= 8; $i++) {
+                        $labelKey = "SubLabel_" . $i;
+                        if (!empty($student->$labelKey)) {
+                            $student->$labelKey = $translator->translate($student->$labelKey);
+                        }
+                    }
+
+                    return $student;
+                });
+        }
+
+        return Inertia::render('find_result/merit_list', [
+            'availableYears' => $years,
+            'marhalas' => $marhalas,
+            'SRtype' => $SRtype,
+            'searchResults' => $results
+        ]);
+    }
+
+
+
     // public function generatePdf($Roll, $reg_id, $action = 'D')
     // {
     //     $details = student::where('Roll', $Roll)

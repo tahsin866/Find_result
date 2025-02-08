@@ -37,6 +37,11 @@ Route::get('find_result/marhalawariFindResult', [findtStudentController::class, 
     ->name('find_result.marhalawariFindResult')
     ->middleware('cache.headers:public;max_age=3600;etag');
 
+    Route::get('find_result/merit_list', [findtStudentController::class, 'merit_list'])
+    ->name('find_result.merit_list')
+    ->middleware('cache.headers:public;max_age=3600;etag');
+
+
     // Route::get('/find_result/studentResultFind/{Roll}/{reg_id}', [findtStudentController::class, 'search'])->name('find_result.studentResultFind');
 
 

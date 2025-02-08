@@ -195,7 +195,7 @@ const quickSearch = (type) => {
                 <Link
                     v-if="$page.props.auth.user"
                     :href="route('dashboard')"
-                    class="bg-white text-[#727D73] px-6 py-2 rounded hover:bg-gray-100 transition-colors"
+                    class="bg-white text-[#2C5A63] px-6 py-2 rounded hover:bg-gray-100 transition-colors"
                 >
                     ড্যাশবোর্ড
                 </Link>
@@ -212,7 +212,7 @@ const quickSearch = (type) => {
 
 
                 <div class="mb-6 flex justify-between items-center">
-        <h2 class="text-2xl font-bold text-[#727D73]">মারহালাওয়ারী ফলাফল অনুসন্ধান</h2>
+        <h2 class="text-2xl font-bold text-[#2C5A63]">মারহালাওয়ারী ফলাফল অনুসন্ধান</h2>
 
         <div class="flex gap-4">
             <button
@@ -231,7 +231,7 @@ const quickSearch = (type) => {
 
             <button
     class="flex items-center gap-2 bg-[#2C5A63] text-white px-4 py-2 rounded-md hover:bg-[#2C5A63] transition"
-    @click="quickSearch('popular')"
+    @click="router.get(route('find_result.merit_list'))"
 >
     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -273,7 +273,7 @@ const quickSearch = (type) => {
         </div>
 
         <div class="text-right">
-            <button @click="search" class="bg-[#727D73] text-white px-8 py-2 rounded-md hover:bg-[#727D73] transition-colors w-full">
+            <button @click="search" class="bg-[#2C5A63] text-white px-8 py-2 rounded-md hover:bg-[#2C5A63] transition-colors w-full">
                 ফলাফল খুঁজুন
             </button>
         </div>
