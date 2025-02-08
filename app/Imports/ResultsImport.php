@@ -9,14 +9,12 @@ use Maatwebsite\Excel\Concerns\WithHeadingRow;
 class ResultsImport implements ToModel, WithHeadingRow
 {
     private $exam_year;
-    private $marhala;
-    private $class;
+    private $level;
 
-    public function __construct($exam_year, $marhala, $class)
+    public function __construct($exam_year, $level)
     {
         $this->exam_year = $exam_year;
-        $this->marhala = $marhala;
-        $this->class = $class;
+        $this->level = $level;
     }
 
     public function model(array $row)
@@ -24,10 +22,11 @@ class ResultsImport implements ToModel, WithHeadingRow
         return new Result([
             'roll_no' => $row['roll_no'],
             'student_name' => $row['student_name'],
-            'class' => $this->class,
+            'class' => $row['class'],
             'exam_year' => $this->exam_year,
-            'marhala' => $this->marhala,
-            'marks' => $row['marks']
+            'level' => $this->level,
+            'marks' => $row['marks'],
+            'status' => $row['marks'] >= 50 ? 'Pass' : 'Fail',
         ]);
     }
 }

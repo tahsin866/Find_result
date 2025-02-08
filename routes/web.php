@@ -3,6 +3,7 @@
 use App\Http\Controllers\findtStudentController;
 use App\Http\Controllers\PDFController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ResultController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -61,6 +62,14 @@ Route::get('find_result/marhalawariFindResult', [findtStudentController::class, 
         return inertia::render('uploadResult/useracsess');
     });
 
+
+    Route::get('/results', function () {
+        return Inertia::render('Results/Upload', [
+            'auth' => [
+                'user' => Auth::user()
+            ]
+        ]);
+    })->middleware(['auth']);
 
 
 

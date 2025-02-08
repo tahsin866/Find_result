@@ -11,16 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('results', function (Blueprint $table) {
+        Schema::create('find-results', function (Blueprint $table) {
             $table->id();
             $table->string('roll_no');
             $table->string('student_name');
             $table->string('class');
             $table->string('exam_year');
-            $table->string('marhala');
-            $table->decimal('marks', 5, 2);
+            $table->string('level');
+            $table->integer('marks');
+            $table->enum('status', ['Pass', 'Fail']);
             $table->timestamps();
         });
+
     }
 
     /**
@@ -28,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('results');
+        Schema::dropIfExists('find-results');
     }
 };
