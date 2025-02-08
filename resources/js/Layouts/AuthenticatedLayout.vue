@@ -1,8 +1,18 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import { Link } from '@inertiajs/vue3'
 import DropdownLink from '@/Components/DropdownLink.vue';
 import Dropdown from '@/Components/Dropdown.vue';
+
+
+import { usePage } from '@inertiajs/vue3';
+
+// Add this to access auth data
+const page = usePage()
+const userName = computed(() => {
+    return page.props.auth?.user?.name || 'User';
+});
+
 
 // const showingNavigationDropdown = ref(false);
 // const unreadNotifications = ref(3);
@@ -68,6 +78,14 @@ const handleLogout = () => {
     }
   })
 }
+
+
+defineProps({
+    auth: {
+        type: Object,
+        required: true
+    }
+});
 
 
 </script>
@@ -151,7 +169,7 @@ const handleLogout = () => {
                                             type="button"
                                             class="inline-flex items-center px-3 py-2 bg-white dark:bg-gray-800 border border-transparent text-md font leading-4 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300"
                                         >
-                                            {{ $page.props.auth.user.name }}
+                                        {{ userName }}
                                             <svg
                                                 class="-me-0.5 ms-2 h-4 w-4"
                                                 xmlns="http://www.w3.org/2000/svg"

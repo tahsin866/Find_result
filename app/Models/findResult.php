@@ -6,8 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class findResult extends Model
 {
-    protected $table = 'find_result';
-
+    protected $table = 'find-results';
 
     protected $fillable = [
         'roll_no',
@@ -18,6 +17,4 @@ class findResult extends Model
         'marks',
         'status'
     ];
-
-
 }

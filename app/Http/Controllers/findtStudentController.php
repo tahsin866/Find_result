@@ -12,11 +12,7 @@ use Mpdf\Mpdf;
 
 use Barryvdh\DomPDF\Facade\Pdf;
 use MirazMac\BanglaString\Translator\BijoyToAvro\Translator;
-
-
-
-
-
+use Mpdf\Tag\Select;
 
 class findtStudentController extends Controller
 {
@@ -27,10 +23,10 @@ class findtStudentController extends Controller
 
     public function search(Request $request)
     {
-        $years = student::distinct()
-            ->orderBy('years', 'desc')
-            ->pluck('years');
+        // Fetch distinct years in descending order
+        $years = student::distinct()->orderBy('years', 'desc')->pluck('years');
 
+        // Define marhalas
         $marhalas = [
             1 => 'তাকমিল',
             2 => 'ফযিলত',
@@ -42,29 +38,35 @@ class findtStudentController extends Controller
             8 => 'ইলমুল কিরাত',
         ];
 
+        // Initialize results
         $results = [];
 
+        // Check if required fields are filled
         if ($request->filled(['CID', 'years', 'Roll', 'reg_id'])) {
             $translator = new Translator();
 
-            $results = student::where([
+            // Fetch students with the given criteria
+            $students = student::where([
                 'CID' => $request->CID,
                 'years' => $request->years,
                 'Roll' => $request->Roll,
                 'reg_id' => $request->reg_id,
-            ])->get()->map(function ($student) use ($translator) {
-                // Convert Bijoy to Unicode using the correct method
-                $student->Name = $translator->translate($student->Name);
-                $student->Father = $translator->translate($student->Father);
-                $student->Madrasha = $translator->translate($student->Madrasha);
-                $student->Division = $translator->translate($student->Division);
-                $student->Roll = $translator->translate($student->Roll);
-                $student->reg_id = $translator->translate($student->reg_id);
-                $student->Total = $translator->translate($student->Total);
-                $student->Positions = $translator->translate($student->Positions);
+            ])->select('Name', 'Father', 'Roll', 'reg_id', 'Madrasha', 'Total', 'Division', 'Positions',
+                       'SubLabel_1', 'SubValue_1', 'SubLabel_2', 'SubValue_2',
+                       'SubLabel_3', 'SubValue_3', 'SubLabel_4', 'SubValue_4',
+                       'SubLabel_5', 'SubValue_5', 'SubLabel_6', 'SubValue_6',
+                       'SubLabel_7', 'SubValue_7', 'SubLabel_8', 'SubValue_8')
+              ->get();
+
+            // Translate fields in bulk
+            $results = $students->map(function ($student) use ($translator) {
+                $fieldsToTranslate = ['Name', 'Father', 'Madrasha', 'Division', 'Roll', 'reg_id', 'Total', 'Positions'];
+                foreach ($fieldsToTranslate as $field) {
+                    $student->$field = $translator->translate($student->$field);
+                }
 
                 for ($i = 1; $i <= 8; $i++) {
-                    $labelKey = "SubLabel_" .  $i;
+                    $labelKey = "SubLabel_$i";
                     if (!empty($student->$labelKey)) {
                         $student->$labelKey = $translator->translate($student->$labelKey);
                     }
@@ -74,6 +76,7 @@ class findtStudentController extends Controller
             });
         }
 
+        // Return the data to the view
         return Inertia::render('find_result/studentResultFind', [
             'availableYears' => $years,
             'marhalas' => $marhalas,
@@ -82,8 +85,6 @@ class findtStudentController extends Controller
             ]
         ]);
     }
-
-
 
 
     public function marhalaFind(Request $request)

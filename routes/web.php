@@ -7,7 +7,7 @@ use App\Http\Controllers\ResultController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
-
+use Illuminate\Support\Facades\Auth;
 Route::get('/', function () {
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
@@ -63,13 +63,26 @@ Route::get('find_result/marhalawariFindResult', [findtStudentController::class, 
     });
 
 
+    // Route::post('/results/upload', [ResultController::class, 'store'])->middleware(['auth']);
+
+
     Route::get('/results', function () {
         return Inertia::render('Results/Upload', [
             'auth' => [
-                'user' => Auth::user()
+                'user' => [
+                    'name' => Auth::user()->name,
+                    'email' => Auth::user()->email,
+                    // Add other user properties you need
+                ]
             ]
         ]);
     })->middleware(['auth']);
+
+
+    Route::post('/uploadResult/resultUpload', [ResultController::class, 'store'])
+    ->middleware(['auth', 'web'])
+    ->name('result.upload');
+
 
 
 

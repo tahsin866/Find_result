@@ -2,6 +2,8 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { ref, computed } from 'vue';
 import axios from 'axios';
+import { router } from '@inertiajs/vue3'
+
 
 defineProps({
     auth: {
@@ -33,44 +35,35 @@ const handleFileUpload = (event) => {
     const file = event.target.files[0];
     if (file) {
         uploadFile.value = file;
-        const reader = new FileReader();
-        reader.onload = (e) => {
-            // Here you would parse the file content
-            // For now showing sample data
-            resultsPreview.value = [
-                { id: 1, roll: '101', name: 'Student A', class: selectedClass.value, marks: 85, status: 'Pass' },
-                { id: 2, roll: '102', name: 'Student B', class: selectedClass.value, marks: 45, status: 'Fail' },
-            ];
-        };
-        reader.readAsText(file);
     }
 };
 
 // Upload results
 const uploadResults = async () => {
-    if (!uploadFile.value || !selectedExam.value || !selectedLevel.value) {
-        alert('Please select all required fields and a file');
-        return;
-    }
-
     const formData = new FormData();
     formData.append('file', uploadFile.value);
     formData.append('exam_year', selectedExam.value);
     formData.append('level', selectedLevel.value);
-    formData.append('class', selectedClass.value);
+    // formData.append('class', selectedClass.value);
 
-    try {
-        const response = await axios.post('/results/upload', formData, {
-            headers: {
-                'Content-Type': 'multipart/form-data'
-            }
-        });
-        alert('Results uploaded successfully');
-        resetForm();
-    } catch (error) {
-        alert('Error uploading results: ' + (error.response?.data?.message || error.message));
-    }
+    router.post('/uploadResult/resultUpload', formData, {
+        forceFormData: true,
+        preserveScroll: true,
+        preserveState: true,
+        onBefore: () => {
+            // Show loading state
+        },
+        onSuccess: () => {
+            alert('Results uploaded successfully');
+            resetForm();
+        },
+        onError: (errors) => {
+            alert('Error uploading results: ' + Object.values(errors).join('\n'));
+        }
+    });
 };
+
+
 
 
 const resetForm = () => {
@@ -99,7 +92,7 @@ const filteredResults = computed(() => {
             </h2>
 
             <!-- Exam, Level & Class Selection -->
-            <div class="mb-4 grid grid-cols-3 gap-4">
+            <div class="mb-4 grid grid-cols-2 gap-4">
                 <div>
                     <label class="block text-[#2C5A63] font-medium mb-1">পরীক্ষার বছর নির্বাচন করুন</label>
                     <select v-model="selectedExam"
@@ -127,18 +120,7 @@ const filteredResults = computed(() => {
                     </select>
                 </div>
 
-                <div>
-                    <label class="block text-[#2C5A63] font-medium mb-1">শ্রেণী নির্বাচন করুন</label>
-                    <select v-model="selectedClass"
-                            class="w-full p-2 border-[#2C5A63]/20 rounded-md focus:border-[#2C5A63] focus:ring-[#2C5A63]">
-                        <option value="">সকল শ্রেণী</option>
-                        <option v-for="(className, index) in classOptions"
-                                :key="index"
-                                :value="className">
-                            {{ className }}
-                        </option>
-                    </select>
-                </div>
+
             </div>
 
             <!-- File Upload -->
