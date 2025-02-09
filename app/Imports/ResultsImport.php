@@ -34,11 +34,11 @@ class ResultsImport implements ToModel, WithBatchInserts, WithChunkReading, With
 
     public function batchSize(): int
     {
-        return 500; // Adjust batch size for better performance
+        return 5000; // Increased batch size
     }
 
     public function chunkSize(): int
     {
-        return 1000; // Adjust chunk size for large imports
+        return 10000; // Increased chunk size
     }
 }

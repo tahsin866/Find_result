@@ -6,10 +6,11 @@ import { router } from '@inertiajs/vue3'
 
 
 defineProps({
-    auth: {
-        type: Object,
-        required: true
-    }
+  filteredResults: {
+    type: Array,
+    required: true,
+    default: () => []
+  }
 });
 
 // State variables
@@ -20,15 +21,7 @@ const uploadFile = ref(null);
 const resultsPreview = ref([]);
 const fileInput = ref(null);
 
-// Class options based on level
-const classOptions = computed(() => {
-    if (selectedLevel.value === 'dakhil') {
-        return ['Class 6', 'Class 7', 'Class 8', 'Class 9', 'Class 10'];
-    } else if (selectedLevel.value === 'alim') {
-        return ['Class 11', 'Class 12'];
-    }
-    return [];
-});
+
 
 // Handle file selection
 const handleFileUpload = (event) => {
@@ -146,36 +139,40 @@ const filteredResults = computed(() => {
             </div>
 
             <!-- Results Preview -->
-            <div v-if="filteredResults.length > 0" class="mt-6">
-                <h3 class="text-lg font-semibold text-[#2C5A63] mb-3">📊 ফলাফল প্রিভিউ</h3>
-                <div class="overflow-x-auto">
-                    <table class="min-w-full bg-white shadow-md rounded-lg">
-                        <thead>
-                            <tr class="bg-[#2C5A63] text-white">
-                                <th class="p-2">রোল</th>
-                                <th class="p-2">নাম</th>
-                                <th class="p-2">শ্রেণী</th>
-                                <th class="p-2">নম্বর</th>
-                                <th class="p-2">ফলাফল</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr v-for="result in filteredResults"
-                                :key="result.id"
-                                class="border-t hover:bg-[#2C5A63]/5">
-                                <td class="p-2 text-center">{{ result.roll }}</td>
-                                <td class="p-2 text-center">{{ result.name }}</td>
-                                <td class="p-2 text-center">{{ result.class }}</td>
-                                <td class="p-2 text-center">{{ result.marks }}</td>
-                                <td class="p-2 text-center font-semibold"
-                                    :class="result.status === 'Pass' ? 'text-green-600' : 'text-red-600'">
-                                    {{ result.status }}
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+           <div v-if="filteredResults.length > 0" class="mt-6">
+    <h3 class="text-lg font-semibold text-[#2C5A63] mb-3">📊 ফলাফল প্রিভিউ</h3>
+    <div class="overflow-x-auto">
+      <table class="min-w-full bg-white shadow-md rounded-lg">
+        <thead>
+          <tr class="bg-[#2C5A63] text-white">
+            <th class="p-2">রোল</th>
+            <th class="p-2">নাম</th>
+            <th class="p-2">শ্রেণী</th>
+            <th class="p-2">পরীক্ষার বছর</th>
+            <th class="p-2">লেভেল</th>
+            <th class="p-2">নম্বর</th>
+            <th class="p-2">ফলাফল</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="result in filteredResults"
+              :key="result.id"
+              class="border-t hover:bg-[#2C5A63]/5">
+            <td class="p-2 text-center">{{ result.roll }}</td>
+            <td class="p-2 text-center">{{ result.student_name }}</td>
+            <td class="p-2 text-center">{{ result.class }}</td>
+            <td class="p-2 text-center">{{ result.exam_year }}</td>
+            <td class="p-2 text-center">{{ result.level }}</td>
+            <td class="p-2 text-center">{{ result.marks }}</td>
+            <td class="p-2 text-center font-semibold"
+                :class="result.status === 'Pass' ? 'text-green-600' : 'text-red-600'">
+              {{ result.status }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 
             <!-- Submit Button -->
             <div class="mt-6 text-right">

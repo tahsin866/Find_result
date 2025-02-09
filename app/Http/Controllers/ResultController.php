@@ -42,11 +42,14 @@ class ResultController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'file' => 'required|mimes:xlsx,xls,csv|max:102400',
+            'file' => 'required|mimes:xlsx,xls,csv|max:512000', // Increased to 500MB
             'exam_year' => 'required',
             'level' => 'required',
-            // 'class' => 'required'
         ]);
+
+        // Increase PHP memory limit and execution time
+        ini_set('memory_limit', '2048M');
+        ini_set('max_execution_time', 3600); // 1 hour
 
         DB::beginTransaction();
         try {
@@ -65,6 +68,7 @@ class ResultController extends Controller
             ], 500);
         }
     }
+
 
 
     // public function store(Request $request)
