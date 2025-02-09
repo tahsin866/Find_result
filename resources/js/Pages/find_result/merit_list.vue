@@ -4,15 +4,26 @@ import { ref, computed } from 'vue';
 
 
 
+// Update the props definition
 const props = defineProps({
-  canLogin: Boolean,
-  canRegister: Boolean,
-  availableYears: Array,
-  marhalas: Object,
-  SRtype: Object,
-  searchResults: Object,
-  studentDetails: Object
+    canLogin: {
+        type: Boolean,
+        default: false
+    },
+    canRegister: {
+        type: Boolean,
+        default: false
+    },
+    availableYears: Array,
+    marhalas: Object,
+    SRtype: Object,
+    searchResults: Object,
+    studentDetails: Object,
+    auth: Object,
+    errors: Object
 });
+
+
 
 const searchResults = ref(props.searchResults || { data: [], last_page: 1 });
 
@@ -28,18 +39,18 @@ const form = ref({
 
 
 
-const getSubjects = (student) => {
-  const subjects = [];
-  for (let i = 1; i <= 8; i++) {
-    if (student[`SubLabel_${i}`]) {
-      subjects.push({
-        name: student[`SubLabel_${i}`],
-        marks: student[`SubValue_${i}`]
-      });
-    }
-  }
-  return subjects;
-};
+// const getSubjects = (student) => {
+//   const subjects = [];
+//   for (let i = 1; i <= 8; i++) {
+//     if (student[`SubLabel_${i}`]) {
+//       subjects.push({
+//         name: student[`SubLabel_${i}`],
+//         marks: student[`SubValue_${i}`]
+//       });
+//     }
+//   }
+//   return subjects;
+// };
 
 
 
@@ -55,6 +66,7 @@ const downloadPDF = () => {
 
     html2pdf().set(opt).from(element).save();
 };
+
 
 
 const pageSize = ref(10);
@@ -93,35 +105,33 @@ const fetchPage = (page) => {
 
 // Update the search function to include pagination params
 const search = () => {
-  if (!form.value.CID) {
-    alert('মারহালা নির্বাচন করুন');
-    return;
-  }
-  if (!form.value.years) {
-    alert('বছর নির্বাচন করুন');
-    return;
-  }
-
-  if (!form.value.SRtype) {
-    alert('ছাত্র-ছাত্রী নির্বাচন করুন');
-    return;
-  }
-
-
-  router.get(route('find_result.merit_list'), {
-    CID: form.value.CID,
-    SRtype: form.value.SRtype,
-    // MElhaq: form.value.MElhaq,
-    page: 1,
-    per_page: pageSize.value
-  }, {
-    preserveState: true,
-    preserveScroll: true,
-    onSuccess: (page) => {
-      searchResults.value = page.props.searchResults;
+    if (!form.value.CID) {
+        alert('মারহালা নির্বাচন করুন');
+        return;
     }
-  });
+    if (!form.value.SRtype) {
+        alert('ছাত্র-ছাত্রী নির্বাচন করুন');
+        return;
+    }
+
+    router.get(route('find_result.merit_list'), {
+        CID: form.value.CID,
+        SRtype: form.value.SRtype,
+        years: form.value.years,
+        page: currentPage.value,
+        per_page: pageSize.value
+    }, {
+        preserveState: true,
+        preserveScroll: true,
+        onSuccess: (response) => {
+            searchResults.value = response.props.searchResults;
+            console.log('Search Results:', response.props.searchResults);
+        }
+    });
 };
+
+
+
 
 
 
@@ -188,6 +198,20 @@ const quickSearch = (type) => {
         <h2 class="text-2xl font-bold text-[#00695C]">মেধাওয়ারী ফলাফল অনুসন্ধান</h2>
 
         <div class="flex gap-4">
+            <button
+    class="flex items-center gap-2 bg-[#004D40] text-white px-4 py-2 rounded-md hover:bg-[#2C5A63] transition"
+    @click="router.get(route('find_result.marhalawariFindResult'))"
+>
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+        />
+    </svg>
+   মারহালাওয়ারী ফলাফল
+</button>
+
+
+
             <button
     class="flex items-center gap-2 bg-[#004D40] text-white px-4 py-2 rounded-md hover:bg-[#2C5A63] transition"
     @click="router.get(route('find_result.studentResultFind'))"
@@ -346,11 +370,8 @@ const quickSearch = (type) => {
         <tr>
           <th class="px-4 py-2 text-left">ইলহাক</th>
           <th class="px-4 py-2 text-left">নাম</th>
-          <th v-for="(subject, index) in getSubjects(searchResults.data[0])"
-              :key="index"
-              class="px-4 py-2 text-center">
-            {{ subject.name }}
-          </th>
+          <th class="px-4 py-2 text-left">রোল নম্বর</th>
+          <th class="px-4 py-2 text-left">মাদরাসার নাম</th>
           <th class="px-4 py-2 text-center">মোট</th>
           <th class="px-4 py-2 text-center">বিভাগ</th>
           <th class="px-4 py-2 text-center">মেধা তালিকা</th>
@@ -360,11 +381,8 @@ const quickSearch = (type) => {
         <tr v-for="student in searchResults.data" :key="student.id">
           <td class="px-4 py-2">{{ student.MElhaq }}</td>
           <td class="px-4 py-2">{{ student.Name }}</td>
-          <td v-for="(subject, index) in getSubjects(student)"
-              :key="index"
-              class="px-4 py-2 text-center">
-            {{ subject.marks }}
-          </td>
+          <td class="px-4 py-2">{{ student.Roll }}</td>
+          <td class="px-4 py-2">{{ student.Madrasha }}</td>
           <td class="px-4 py-2 text-center">{{ student.Total }}</td>
           <td class="px-4 py-2 text-center">{{ student.Division }}</td>
           <td class="px-4 py-2 text-center font-bold">{{ student.Positions }}</td>
@@ -437,11 +455,10 @@ const quickSearch = (type) => {
 
 </div>
 
-
 <!-- No Results Message -->
-<!-- <div v-else-if="searchResults?.data && searchResults.data.length === 0" class="bg-white rounded-md shadow-xl p-6 text-center py-8">
+<div v-else-if="searchResults?.data && searchResults.data.length === 0" class="bg-white rounded-md shadow-xl p-6 text-center py-8">
     <p class="text-xl text-gray-600">কোন ফলাফল পাওয়া যায়নি</p>
-</div> -->
+</div>
         </main>
 
 

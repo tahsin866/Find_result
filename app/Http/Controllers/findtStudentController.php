@@ -158,7 +158,6 @@ class findtStudentController extends Controller
 
 
 
-
     public function merit_list(Request $request)
     {
         $years = student::select('years')
@@ -179,46 +178,27 @@ class findtStudentController extends Controller
 
         $SRtype = [
             1 => 'ছাত্র',
-            2 => 'ছাত্রী',
+            0 => 'ছাত্রী',
         ];
 
         $results = [];
 
+        $students = collect();
+
         if ($request->CID && $request->years && $request->SRtype) {
             $translator = new Translator();
 
-            // First, get all students and sort them by total marks
+            // Query with pagination
             $students = student::where('CID', $request->CID)
                 ->where('years', $request->years)
                 ->where('SRtype', $request->SRtype)
-                ->orderBy('Total', 'desc')
-                ->get();
-
-            // Group students by position to handle duplicates
-            $positionGroups = [];
-            foreach ($students as $student) {
-                $position = $student->Positions;
-                if (!isset($positionGroups[$position])) {
-                    $positionGroups[$position] = [];
-                }
-                $positionGroups[$position][] = $student;
-            }
-
-            // Apply suffixes for duplicate positions
-            foreach ($positionGroups as $position => $group) {
-                if (count($group) > 1) {
-                    foreach ($group as $index => $student) {
-                        $suffix = chr(65 + $index); // 65 is ASCII for 'A'
-                        $student->Positions = $student->Positions . $suffix;
-                    }
-                }
-            }
-
-            // Flatten and paginate the results
-            $results = collect($students)->sortBy('Roll')
-                ->paginate(15)
+                ->whereNotNull('Positions')
+                ->where('Positions', '!=', '')
+                ->orderByRaw("LENGTH(Positions), Positions ASC")
+                ->orderBy('Roll', 'asc')
+                ->paginate(30)
                 ->through(function ($student) use ($translator) {
-                    // Convert Bijoy to Unicode
+                    // Convert Bijoy to Unicode and translate fields
                     $student->Madrasha = $translator->translate($student->Madrasha);
                     $student->Name = $translator->translate($student->Name);
                     $student->SRtype = $translator->translate($student->SRtype);
@@ -242,9 +222,12 @@ class findtStudentController extends Controller
             'availableYears' => $years,
             'marhalas' => $marhalas,
             'SRtype' => $SRtype,
-            'searchResults' => $results
+            'searchResults' => $students, // Properly formatted paginated result
+            'canLogin' => true
         ]);
     }
+
+
 
 
 
