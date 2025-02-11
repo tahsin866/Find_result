@@ -75,16 +75,57 @@ const filteredResults = computed(() => {
     if (!selectedClass.value) return resultsPreview.value;
     return resultsPreview.value.filter(result => result.class === selectedClass.value);
 });
+
+
+const showModal = ref(false)
+const formData = ref({
+  roll: '',
+  name: '',
+  marks: ''
+})
+
+const openModal = () => {
+  showModal.value = true
+}
+
+const closeModal = () => {
+  showModal.value = false
+  formData.value = {
+    roll: '',
+    name: '',
+    marks: ''
+  }
+}
+
+const submitForm = () => {
+  // Handle form submission here
+  console.log('Form submitted:', formData.value)
+  // Add your API call or data processing logic here
+
+  // Close modal after submission
+  closeModal()
+}
 </script>
 
 <template>
     <AuthenticatedLayout>
-        <div class="mx-auto mt-10 p-6 bg-white shadow-lg rounded-lg">
+        <div class="mx-auto mt-10 p-6 bg-white shadow-lg rounded-md">
             <h2 class="text-2xl font-semibold text-[#2C5A63] mb-4">
                 📤 বাল্ক রেজাল্ট আপলোড এবং মেনেজমেন্ট সিস্টেম
             </h2>
 
-            <!-- Exam, Level & Class Selection -->
+
+
+            <button
+      @click="openModal"
+      class="bg-[#2C5A63] text-white px-4 py-2 rounded-md hover:bg-[#3B7682]"
+      type="button"
+    >
+      পরীক্ষার বর্ষ তৈরি করুন
+    </button>
+
+
+   <!-- Exam, Level & Class Selection -->
             <div class="mb-4 grid grid-cols-2 gap-4">
                 <div>
                     <label class="block text-[#2C5A63] font-medium mb-1">পরীক্ষার বছর নির্বাচন করুন</label>
@@ -112,8 +153,6 @@ const filteredResults = computed(() => {
                         <option value="ilmut_tajwid">ইলমুত তাজবিদ ওয়াল কিরাত</option>
                     </select>
                 </div>
-
-
             </div>
 
             <!-- File Upload -->
@@ -184,5 +223,59 @@ const filteredResults = computed(() => {
                 </button>
             </div>
         </div>
+
+
+  <!-- Modal -->
+  <div v-if="showModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+      <div class="bg-white p-6 rounded-lg shadow-xl w-96">
+        <h3 class="text-lg font-semibold text-[#2C5A63] mb-4">পরীক্ষার বর্ষ তৈরি করুন</h3>
+
+        <!-- Input Fields -->
+        <div class="space-y-4">
+          <div>
+            <label class="block text-[#2C5A63] font-medium mb-1">বাংলা সন </label>
+            <input
+              v-model="formData.roll"
+              type="text"
+              class="w-full p-2 border-[#2C5A63]/20 rounded-md focus:border-[#2C5A63] focus:ring-[#2C5A63]"
+            />
+          </div>
+
+          <div>
+            <label class="block text-[#2C5A63] font-medium mb-1">আরবি সন</label>
+            <input
+              v-model="formData.name"
+              type="text"
+              class="w-full p-2 border-[#2C5A63]/20 rounded-md focus:border-[#2C5A63] focus:ring-[#2C5A63]"
+            />
+          </div>
+
+          <div>
+            <label class="block text-[#2C5A63] font-medium mb-1">ইংরেজি সন</label>
+            <input
+              v-model="formData.marks"
+              type="number"
+              class="w-full p-2 border-[#2C5A63]/20 rounded-md focus:border-[#2C5A63] focus:ring-[#2C5A63]"
+            />
+          </div>
+        </div>
+
+        <!-- Modal Buttons -->
+        <div class="mt-6 flex justify-end space-x-3">
+          <button
+            @click="closeModal"
+            class="px-4 py-2 border border-[#2C5A63] text-[#2C5A63] rounded-md hover:bg-[#2C5A63]/10"
+          >
+            বাতিল
+          </button>
+          <button
+            @click="submitForm"
+            class="px-4 py-2 bg-[#2C5A63] text-white rounded-md hover:bg-[#3B7682]"
+          >
+            সংরক্ষণ করুন
+          </button>
+        </div>
+      </div>
+    </div>
     </AuthenticatedLayout>
 </template>
