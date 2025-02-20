@@ -161,18 +161,6 @@ const quickSearch = (type) => {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                     <div>
                         <label class="block text-gray-700 mb-2 font-semibold">মারহালা নির্বাচন করুন</label>
@@ -219,9 +207,6 @@ const quickSearch = (type) => {
 
             <!-- Results Section -->
             <div v-for="student in searchResults.data" :key="student.id" class="bg-white p-5  rounded-md">
-
-
-
                 <div class="flex justify-end gap-4 mb-6">
 <button @click="printCertificate(student)"
             class="flex items-center gap-2 bg-[#004D40] text-white px-4 py-2 rounded-md hover:bg-[#00695C] transition">

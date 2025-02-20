@@ -151,10 +151,6 @@ const quickSearch = (type) => {
 };
 
 
-
-
-
-
 </script>
 
 

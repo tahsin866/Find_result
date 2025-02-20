@@ -69,7 +69,7 @@ const chartData = {
                   </svg>
                 </div>
                 <div class="ml-4">
-                  <p class="text-sm text-white/80">সর্বমোট</p>
+                  <p class="text-lg text-white/80">সর্বমোট</p>
                   <p class="text-lg font-semibold text-white">{{ statistics.totalStudents.toLocaleString() }}</p>
                 </div>
               </div>
@@ -83,7 +83,7 @@ const chartData = {
                   </svg>
                 </div>
                 <div class="ml-4">
-                  <p class="text-sm text-white/80">ফযিলত</p>
+                  <p class="text-xl text-white/80">ফযিলত</p>
                   <p class="text-lg font-semibold text-white">{{ statistics.totalStudents.toLocaleString() }}</p>
                 </div>
               </div>
@@ -96,7 +96,7 @@ const chartData = {
                   </svg>
                 </div>
                 <div class="ml-4">
-                  <p class="text-sm text-white/80">সানাবিয়া উলইয়া</p>
+                  <p class="text-xl text-white/80">সানাবিয়া উলইয়া</p>
                   <p class="text-lg font-semibold text-white">{{ statistics.totalStudents.toLocaleString() }}</p>
                 </div>
               </div>
@@ -109,7 +109,7 @@ const chartData = {
                   </svg>
                 </div>
                 <div class="ml-4">
-                  <p class="text-sm text-white/80">সানাবিয়া</p>
+                  <p class="text-xl text-white/80">সানাবিয়া</p>
                   <p class="text-lg font-semibold text-white">{{ statistics.totalStudents.toLocaleString() }}</p>
                 </div>
               </div>
@@ -122,7 +122,7 @@ const chartData = {
                   </svg>
                 </div>
                 <div class="ml-4">
-                  <p class="text-sm text-white/80">মুতাওয়াসসিতা</p>
+                  <p class="text-xl text-white/80">মুতাওয়াসসিতা</p>
                   <p class="text-lg font-semibold text-white">{{ statistics.totalStudents.toLocaleString() }}</p>
                 </div>
               </div>
@@ -135,7 +135,7 @@ const chartData = {
                   </svg>
                 </div>
                 <div class="ml-4">
-                  <p class="text-sm text-white/80">ইবতেদাইয়্যাহ</p>
+                  <p class="text-xl text-white/80">ইবতেদাইয়্যাহ</p>
                   <p class="text-lg font-semibold text-white">{{ statistics.totalStudents.toLocaleString() }}</p>
                 </div>
               </div>
@@ -148,7 +148,7 @@ const chartData = {
                   </svg>
                 </div>
                 <div class="ml-4">
-                  <p class="text-sm text-white/80">তাহফিজুল কোরান</p>
+                  <p class="text-xl text-white/80">তাহফিজুল কোরান</p>
                   <p class="text-lg font-semibold text-white">{{ statistics.totalStudents.toLocaleString() }}</p>
                 </div>
               </div>
@@ -161,7 +161,7 @@ const chartData = {
                   </svg>
                 </div>
                 <div class="ml-4">
-                  <p class="text-sm text-white/80">ইলমুত তাজবিদ ওয়াল কিরাআত</p>
+                  <p class="text-xl text-white/80">ইলমুত তাজবিদ ওয়াল কিরাআত</p>
                   <p class="text-lg font-semibold text-white">{{ statistics.totalStudents.toLocaleString() }}</p>
                 </div>
               </div>
@@ -173,41 +173,41 @@ const chartData = {
 
           <!-- Quick Actions -->
           <div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div class="bg-white shadow-lg rounded-xl p-6 border-t-4 border-[#2C5A63]">
+            <div class="bg-white shadow-lg rounded-md p-6 border-t-4 border-[#2C5A63]">
               <div class="flex items-center justify-between mb-4">
                 <h3 class="text-lg font-semibold text-[#2C5A63]">🔍 Quick Search</h3>
-                <span class="text-sm text-[#2C5A63]/70">Real-time</span>
+                <span class="text-xl text-[#2C5A63]/70">Real-time</span>
               </div>
               <div class="relative">
                 <input type="text"
-                       class="w-full rounded-lg border-[#2C5A63]/20 focus:border-[#2C5A63] focus:ring-[#2C5A63] pl-10 pr-4 py-2"
+                       class="w-full rounded-md border-[#2C5A63]/20 focus:border-[#2C5A63] focus:ring-[#2C5A63] pl-10 pr-4 py-2"
                        placeholder="Search by Roll/Registration No." />
                 <!-- Search icon -->
               </div>
             </div>
 
-            <div class="bg-white shadow-lg rounded-xl p-6 border-t-4 border-[#2C5A63]">
+            <div class="bg-white shadow-lg rounded-md p-6 border-t-4 border-[#2C5A63]">
               <h3 class="text-lg font-semibold text-[#2C5A63] mb-4">📤 Result Upload</h3>
               <div class="flex flex-col gap-2">
-                <button class="bg-[#2C5A63] text-white px-4 py-2 rounded-lg hover:bg-[#234951] flex items-center justify-center gap-2">
+                <button class="bg-[#2C5A63] text-white px-4 py-2 rounded-md hover:bg-[#234951] flex items-center justify-center gap-2">
                   Bulk Upload
                 </button>
-                <button class="bg-[#3B7682] text-white px-4 py-2 rounded-lg hover:bg-[#2C5A63] flex items-center justify-center gap-2">
+                <button class="bg-[#3B7682] text-white px-4 py-2 rounded-md hover:bg-[#2C5A63] flex items-center justify-center gap-2">
                   Single Entry
                 </button>
               </div>
             </div>
 
-            <div class="bg-white shadow-lg rounded-xl p-6 border-t-4 border-[#2C5A63]">
+            <div class="bg-white shadow-lg rounded-md p-6 border-t-4 border-[#2C5A63]">
               <h3 class="text-lg font-semibold text-[#2C5A63] mb-4">🎯 Quick Actions</h3>
               <div class="space-y-2">
-                <button class="w-full text-left px-4 py-2 rounded-lg hover:bg-[#F0F4F5] flex items-center gap-2 text-[#2C5A63]">
+                <button class="w-full text-left px-4 py-2 rounded-md hover:bg-[#F0F4F5] flex items-center gap-2 text-[#2C5A63]">
                   <span>📊</span> Generate Reports
                 </button>
-                <button class="w-full text-left px-4 py-2 rounded-lg hover:bg-[#F0F4F5] flex items-center gap-2 text-[#2C5A63]">
+                <button class="w-full text-left px-4 py-2 rounded-md hover:bg-[#F0F4F5] flex items-center gap-2 text-[#2C5A63]">
                   <span>📱</span> Send SMS Notifications
                 </button>
-                <button class="w-full text-left px-4 py-2 rounded-lg hover:bg-[#F0F4F5] flex items-center gap-2 text-[#2C5A63]">
+                <button class="w-full text-left px-4 py-2 rounded-md hover:bg-[#F0F4F5] flex items-center gap-2 text-[#2C5A63]">
                   <span>📧</span> Email Results
                 </button>
               </div>

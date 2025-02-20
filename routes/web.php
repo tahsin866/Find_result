@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ExamYearController;
 use App\Http\Controllers\findtStudentController;
 use App\Http\Controllers\PDFController;
 use App\Http\Controllers\ProfileController;
@@ -40,6 +41,13 @@ Route::get('find_result/marhalawariFindResult', [findtStudentController::class, 
     Route::get('find_result/merit_list', [findtStudentController::class, 'merit_list'])
     ->name('find_result.merit_list')
     ->middleware('cache.headers:public;max_age=3600;etag');
+
+
+
+    Route::post('/exam-years', [ExamYearController::class, 'store'])->name('exam-years.store');
+    Route::get('/exam-years', [ExamYearController::class, 'index'])->name('exam-years.index');
+
+
 
 
     // Route::get('/find_result/studentResultFind/{Roll}/{reg_id}', [findtStudentController::class, 'search'])->name('find_result.studentResultFind');
