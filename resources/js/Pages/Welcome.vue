@@ -34,128 +34,167 @@ function handleImageError() {
 
     <div style="font-family: 'Amiri', 'Lateef', 'SolaimanLipi', sans-serif;" class="min-h-screen bg-gray-50 flex flex-col">
         <!-- Header -->
-        <header class="bg-gradient-to-r from-[#0B4D2F] to-[#116D45] relative overflow-hidden">
-    <!-- Islamic Pattern Overlay -->
-    <div class="absolute inset-0 opacity-10">
-      <div class="islamic-pattern w-full h-full"></div>
-    </div>
+        <header class="bg-emerald-900">
+    <!-- Islamic Geometric Pattern Top -->
+    <div class="" style="background-image: url('path-to-islamic-pattern.png')"></div>
 
-    <!-- Decorative Domes -->
-    <div class="absolute top-0 left-0 w-24 h-24 opacity-10">
-      <!-- <svg viewBox="0 0 24 24" class="w-full h-full text-white" fill="currentColor">
-        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
-      </svg> -->
-    </div>
-    <div class="absolute top-0 right-0 w-24 h-24 opacity-10 transform rotate-90">
-      <!-- <svg viewBox="0 0 24 24" class="w-full h-full text-white" fill="currentColor">
-        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
-      </svg> -->
-    </div>
+    <div class="container mx-auto px-6 py-5">
+        <div class="flex flex-col items-center">
+            <!-- Arabic Bismillah -->
 
-    <div class="container mx-auto px-6 py-8">
-      <div class="relative">
-        <div class="text-center mx-auto max-w-4xl">
-          <!-- Logo -->
-          <div class="flex justify-center mb-6">
-            <!-- <div class="w-20 h-20 rounded-full bg-white/10 flex items-center justify-center">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-[#FFD700]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/>
-              </svg>
-            </div> -->
-          </div>
 
-          <!-- Title -->
+            <!-- Main Content -->
+            <div class="w-full text-center space-y-6">
+                <!-- Decorative Border Start -->
+                <div class="flex justify-center mb-4">
+                    <div class="border-2 border-emerald-300/30 p-1 rounded-md">
+                        <div class="border-2 border-emerald-300/30 px-8 py-4 rounded-md">
+                            <h1 class="text-5xl font-bold text-white">
+                                বেফাকুল মাদারিসিল আরাবিয়া বাংলাদেশ
+                            </h1>
+                        </div>
+                    </div>
+                </div>
 
-          <h2 class="text-4xl font-bold text-[#FFD700] mb-4">
-            বেফাকুল মাদারিসিল আরাবিয়া বাংলাদেশ
-          </h2>
+                <!-- Subtitle with Islamic Border -->
+                <div class="relative">
+                    <div class="absolute inset-0 flex items-center">
+                        <div class="h-px w-full bg-emerald-300/20"></div>
+                    </div>
+                    <div class="relative flex justify-center">
+                        <h3 class=" rounded-md px-4 bg-gradient-to-r from-emerald-900 to-emerald-800 text-2xl font-bold text-emerald-100">
+                            (বাংলাদেশ কওমী মাদরাসা শিক্ষাবোর্ড)
+                        </h3>
+                    </div>
+                </div>
 
-          <!-- Subtitle -->
-          <div class="space-y-3">
-            <h3 class="text-2xl font-bold text-white">
-              (বাংলাদেশ কওমী মাদরাসা শিক্ষাবোর্ড)
-            </h3>
-            <h3 class="text-xl font-bold text-white/90 flex items-center justify-center gap-2">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
-              </svg>
-              ২০৫, কাজলার পাড় (ভাঙ্গাপ্রেস), যাত্রাবাড়ী, ঢাকা-১২৩৬
-            </h3>
-          </div>
-        </div>
-      </div>
-    </div>
-  </header>
-
-        <!-- Main Content -->
-        <main class="container mx-auto px-6 py-12 flex-grow bg-[#F8F9FA]">
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-
-      <!-- Individual Result Card -->
-      <Link :href="route('find_result.studentResultFind')"
-        class="group p-8 bg-white border-2 border-[#116D45]/20 rounded-lg hover:border-[#116D45] transition-all duration-300 shadow-md hover:shadow-xl relative overflow-hidden">
-        <div class="islamic-pattern absolute inset-0 opacity-5"></div>
-        <div class="relative">
-          <div class="flex items-center gap-4 mb-4">
-            <div class="w-14 h-14 rounded-full bg-[#116D45] flex items-center justify-center">
-              <svg class="w-7 h-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path d="M12 14l9-5-9-5-9 5 9 5z"/>
-                <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"/>
-              </svg>
-            </div>
-            <h3 class="text-xl font-bold text-[#0B4D2F]">ব্যক্তিগত ফলাফল অনুসন্ধান</h3>
-          </div>
-          <p class="text-[#116D45]/80 text-lg">পরীক্ষার ফলাফল দেখুন</p>
-        </div>
-      </Link>
-
-      <!-- Marhala Result Card -->
-      <Link :href="route('find_result.marhalawariFindResult')"
-        class="group p-8 bg-white border-2 border-[#116D45]/20 rounded-lg hover:border-[#116D45] transition-all duration-300 shadow-md hover:shadow-xl relative overflow-hidden">
-        <div class="islamic-pattern absolute inset-0 opacity-5"></div>
-        <div class="relative">
-          <div class="flex items-center gap-4 mb-4">
-            <div class="w-14 h-14 rounded-full bg-[#116D45] flex items-center justify-center">
-              <svg class="w-7 h-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/>
-              </svg>
-            </div>
-            <h3 class="text-xl font-bold text-[#0B4D2F]">মারহালাওয়ারী ফলাফল</h3>
-          </div>
-          <p class="text-[#116D45]/80 text-lg">মারহালাওয়ারী ফলাফল যাচাই করুন</p>
-        </div>
-      </Link>
-
-      <!-- Merit List Card -->
-      <Link :href="route('find_result.merit_list')"
-        class="group p-8 bg-white border-2 border-[#116D45]/20 rounded-lg hover:border-[#116D45] transition-all duration-300 shadow-md hover:shadow-xl relative overflow-hidden">
-        <div class="islamic-pattern absolute inset-0 opacity-5"></div>
-        <div class="relative">
-          <div class="flex items-center gap-4 mb-4">
-            <div class="w-14 h-14 rounded-full bg-[#116D45] flex items-center justify-center">
-              <svg class="w-7 h-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/>
-              </svg>
-            </div>
-            <h3 class="text-xl font-bold text-[#0B4D2F]">মেধা তালিকা</h3>
-          </div>
-          <p class="text-[#116D45]/80 text-lg">মারহালাওয়ারী ফলাফল যাচাই করুন</p>
-        </div>
-      </Link>
-
-    </div>
-  </main>
-
-        <!-- Footer -->
-        <footer class="bg-[#2C5A63] text-white">
-            <div class="container mx-auto px-6 py-8">
-                <div class="text-center">
-                    <p class="text-[#FFD700] font-arabic mb-2">جميع الحقوق محفوظة</p>
-                    <p class="text-sm">© ২০২৪ বেফাকুল মাদারিসিল আরাবিয়া বাংলাদেশ</p>
+                <!-- Address with Decorative Elements -->
+                <div class="flex justify-center items-center gap-4">
+                    <span class="text-emerald-300">❖</span>
+                    <h3 class="text-2xl font-bold text-emerald-100">
+                        ২০৫, কাজলার পাড় (ভাঙ্গাপ্রেস), যাত্রাবাড়ী, ঢাকা-১২৩৬
+                    </h3>
+                    <span class="text-emerald-300">❖</span>
                 </div>
             </div>
-        </footer>
+        </div>
+    </div>
+
+    <!-- Islamic Geometric Pattern Bottom -->
+    <div class="h-4 bg-repeat-x transform rotate-180" style="background-image: url('path-to-islamic-pattern.png')"></div>
+</header>
+
+        <!-- Main Content -->
+        <main class="container mx-auto px-6 py-8 flex-grow bg-[#F8F9FA]">
+    <!-- Decorative Header -->
+
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Individual Result Card -->
+        <Link :href="route('find_result.studentResultFind')"
+            class="group bg-white rounded-xl shadow-sm transition-all duration-500 ease-in-out hover:shadow-xl hover:-translate-y-1">
+            <div class="border border-emerald-800/10 rounded-xl overflow-hidden">
+                <div class="h-2 bg-emerald-800 opacity-90"></div>
+                <div class="p-6">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-14 h-14 rounded-lg bg-emerald-800/95 flex items-center justify-center shadow-inner">
+                            <span class="text-xl text-white font-arabic">طالب</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-emerald-900">ব্যক্তিগত ফলাফল অনুসন্ধান</h3>
+                    </div>
+                    <p class="text-emerald-800/70 text-base mb-4">পরীক্ষার ফলাফল দেখুন</p>
+                    <div class="flex items-center gap-2 text-emerald-800/40">
+                        <span>◈</span>
+                        <div class="h-px flex-grow bg-emerald-800/10"></div>
+                        <span>◈</span>
+                    </div>
+                </div>
+            </div>
+        </Link>
+
+        <!-- Marhala Result Card -->
+        <Link :href="route('find_result.marhalawariFindResult')"
+            class="group bg-white rounded-xl shadow-sm transition-all duration-500 ease-in-out hover:shadow-xl hover:-translate-y-1">
+            <div class="border border-emerald-800/10 rounded-xl overflow-hidden">
+                <div class="h-2 bg-emerald-800 opacity-90"></div>
+                <div class="p-6">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-14 h-14 rounded-lg bg-emerald-800/95 flex items-center justify-center shadow-inner">
+                            <span class="text-xl text-white font-arabic">مرحلة</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-emerald-900">মারহালাওয়ারী ফলাফল</h3>
+                    </div>
+                    <p class="text-emerald-800/70 text-base mb-4">মারহালাওয়ারী ফলাফল যাচাই করুন</p>
+                    <div class="flex items-center gap-2 text-emerald-800/40">
+                        <span>◈</span>
+                        <div class="h-px flex-grow bg-emerald-800/10"></div>
+                        <span>◈</span>
+                    </div>
+                </div>
+            </div>
+        </Link>
+
+        <!-- Merit List Card -->
+        <Link :href="route('find_result.merit_list')"
+            class="group bg-white rounded-xl shadow-sm transition-all duration-500 ease-in-out hover:shadow-xl hover:-translate-y-1">
+            <div class="border border-emerald-800/10 rounded-xl overflow-hidden">
+                <div class="h-2 bg-emerald-800 opacity-90"></div>
+                <div class="p-6">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-14 h-14 rounded-lg bg-emerald-800/95 flex items-center justify-center shadow-inner">
+                            <span class="text-xl text-white font-arabic">نتيجة</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-emerald-900">মেধা তালিকা</h3>
+                    </div>
+                    <p class="text-emerald-800/70 text-base mb-4">মারহালাওয়ারী ফলাফল যাচাই করুন</p>
+                    <div class="flex items-center gap-2 text-emerald-800/40">
+                        <span>◈</span>
+                        <div class="h-px flex-grow bg-emerald-800/10"></div>
+                        <span>◈</span>
+                    </div>
+                </div>
+            </div>
+        </Link>
+    </div>
+</main>
+
+
+        <!-- Footer -->
+        <footer class="bg-emerald-900 text-white relative">
+    <!-- Top Decorative Border -->
+
+
+    <div class="container mx-auto px-6 py-3">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Contact Information -->
+            <div class="text-center">
+                <h4 class="text-xl font-bold text-emerald-300 mb-4">যোগাযোগ</h4>
+                <div class="space-y-2">
+                    <p>ফোন: +৮৮-০২-৭৫৪৮৯৩৪</p>
+                    <p>মোবাইল: +৮৮-০১৭১১-১২৩৪৫৬</p>
+                    <p>ইমেইল: info@befaq.org.bd</p>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+
+
+            <!-- Quick Links -->
+            <div class="text-center">
+                <h4 class="text-xl font-bold text-emerald-300 mb-4">দ্রুত লিংক</h4>
+                <div class="space-y-2">
+                    <p><a href="#" class="hover:text-emerald-300 transition">আমাদের সম্পর্কে</a></p>
+                    <p><a href="#" class="hover:text-emerald-300 transition">নোটিশ বোর্ড</a></p>
+                    <p><a href="#" class="hover:text-emerald-300 transition">যোগাযোগ করুন</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Decorative Border -->
+
+</footer>
+
     </div>
 </template>
 

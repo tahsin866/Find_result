@@ -36,16 +36,23 @@ const getSubjectCount = (student) => {
 };
 
 
+// const getGrade = (marks, grace) => {
+//     if (!marks) return 'N/A';
 
-const getGrade = (marks) => {
-    if (!marks) return 'N/A';
-    const numericMarks = Number(marks);
-    if (numericMarks >= 80) return 'মুমতাজ';
-    if (numericMarks >= 70) return 'জায়্যিদ জিদ্দান';
-    if (numericMarks >= 60) return 'জায়্যিদ';
-    if (numericMarks >= 33) return 'মকবুল';
-    return 'ফেল';
-}
+//     // Ensure marks and grace are numeric
+//     const numericMarks = Number(marks);
+//     const numericGrace = Number(grace) || 0;
+
+//     // Add grace value to marks
+//     const totalMarks = numericMarks + numericGrace;
+
+//     if (totalMarks >= 80) return 'মুমতাজ';
+//     if (totalMarks >= 70) return 'জায়্যিদ জিদ্দান';
+//     if (totalMarks >= 60) return 'জায়্যিদ';
+//     if (totalMarks >= 33) return 'মকবুল';
+//     return 'ফেল';
+// }
+
 
 const search = () => {
     if (!form.value.CID || !form.value.years || !form.value.Roll || !form.value.reg_id) {
@@ -65,23 +72,23 @@ const search = () => {
 
 
 
-const downloadCertificate = (student) => {
-    const url = route('find_result.student_result.pdf', {
-        Roll: student.Roll,
-        reg_id: student.reg_id,
-        action: 'D'
-    });
-    window.location.href = url;
-};
+// const downloadCertificate = (student) => {
+//     const url = route('find_result.student_result.pdf', {
+//         Roll: student.Roll,
+//         reg_id: student.reg_id,
+//         action: 'D'
+//     });
+//     window.location.href = url;
+// };
 
-const printCertificate = (student) => {
-    const url = route('find_result.student_result.pdf', {
-        Roll: student.Roll,
-        reg_id: student.reg_id,
-        action: 'I'
-    });
-    window.open(url, '_blank');
-};
+// const printCertificate = (student) => {
+//     const url = route('find_result.student_result.pdf', {
+//         Roll: student.Roll,
+//         reg_id: student.reg_id,
+//         action: 'I'
+//     });
+//     window.open(url, '_blank');
+// };
 
 
 const quickSearch = (type) => {
@@ -104,222 +111,292 @@ const quickSearch = (type) => {
 
     <div style="font-family: 'Merriweather','SolaimanLipi',sans-serif;" class="min-h-screen bg-gray-50">
         <!-- Header -->
-        <header class="bg-[#2C5A63] shadow-lg">
-            <div class="container mx-auto px-6 py-4">
-                <div class="flex flex-col md:flex-row justify-between items-center">
-                    <div class="w-full text-center mb-4 md:mb-0">
-                        <h1 class="text-5xl font-bold text-white">বেফাকুল মাদারিসিল আরাবিয়া বাংলাদেশ</h1>
-                        <h3 class="text-2xl font-bold text-white">(বাংলাদেশ কওমী মাদরাসা শিক্ষাবোর্ড)</h3>
-                        <h3 class="text-2xl font-bold text-white">২০৫, কাজলার পাড় (ভাঙ্গাপ্রেস), যাত্রাবাড়ী, ঢাকা-১২৩৬
+        <header class="bg-emerald-900">
+    <!-- Islamic Geometric Pattern Top -->
+    <div class="" style="background-image: url('path-to-islamic-pattern.png')"></div>
+
+    <div class="container mx-auto px-6 py-8">
+        <div class="flex flex-col items-center">
+            <!-- Arabic Bismillah -->
+
+
+            <!-- Main Content -->
+            <div class="w-full text-center space-y-6">
+                <!-- Decorative Border Start -->
+                <div class="flex justify-center mb-4">
+                    <div class="border-2 border-emerald-300/30 p-1 rounded-lg">
+                        <div class="border-2 border-emerald-300/30 px-8 py-4 rounded-lg">
+                            <h1 class="text-5xl font-bold text-white">
+                                বেফাকুল মাদারিসিল আরাবিয়া বাংলাদেশ
+                            </h1>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Subtitle with Islamic Border -->
+                <div class="relative">
+                    <div class="absolute inset-0 flex items-center">
+                        <div class="h-px w-full bg-emerald-300/20"></div>
+                    </div>
+                    <div class="relative flex justify-center">
+                        <h3 class="px-4 bg-gradient-to-r from-emerald-900 to-emerald-800 text-2xl font-bold text-emerald-100">
+                            (বাংলাদেশ কওমী মাদরাসা শিক্ষাবোর্ড)
                         </h3>
                     </div>
-                    <nav v-if="canLogin">
-                        <Link v-if="$page.props.auth.user" :href="route('dashboard')"
-                            class="bg-white text-[#2C5A63] px-6 py-2 rounded hover:bg-gray-100 transition-colors">
-                        ড্যাশবোর্ড
-                        </Link>
-                    </nav>
+                </div>
+
+                <!-- Address with Decorative Elements -->
+                <div class="flex justify-center items-center gap-4">
+                    <span class="text-emerald-300">❖</span>
+                    <h3 class="text-2xl font-bold text-emerald-100">
+                        ২০৫, কাজলার পাড় (ভাঙ্গাপ্রেস), যাত্রাবাড়ী, ঢাকা-১২৩৬
+                    </h3>
+                    <span class="text-emerald-300">❖</span>
                 </div>
             </div>
-        </header>
+        </div>
+    </div>
+
+    <!-- Islamic Geometric Pattern Bottom -->
+    <div class="h-4 bg-repeat-x transform rotate-180" style="background-image: url('path-to-islamic-pattern.png')"></div>
+</header>
+
 
 
         <!-- Main Content -->
         <main class="container mx-auto px-4 py-8">
             <!-- Search Form -->
-            <div class="bg-white rounded-lg shadow-sm p-6 mb-8">
+            <div class="bg-white rounded-md shadow-lg p-8 mb-8 border-t-4 border-emerald-800">
     <!-- Header with Quick Access Buttons -->
-    <div class="mb-6 flex justify-between items-center">
-        <h2 class="text-2xl font-bold text-[#2C5A63]">ব্যক্তিগত ফলাফল অনুসন্ধান</h2>
+    <div class="mb-8 flex justify-between items-center">
+        <h2 class="text-2xl font-bold text-emerald-900 flex items-center">
+
+            ব্যক্তিগত ফলাফল অনুসন্ধান
+        </h2>
 
         <div class="flex gap-4">
             <button
-    class="flex items-center gap-2 bg-[#004D40] text-white px-4 py-2 rounded-md hover:bg-[#00695C] transition"
-    @click="router.get(route('find_result.marhalawariFindResult'))"
->
-<svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-            </svg>
-    মারহালাওয়ারী ফলাফল
-</button>
-
+                class="flex items-center gap-2 bg-emerald-800 text-white px-5 py-2 rounded-md hover:bg-emerald-900 transition-all duration-300 shadow-md"
+                @click="router.get(route('find_result.marhalawariFindResult'))"
+            >
+                <i class="fas fa-book-quran"></i>
+                মারহালাওয়ারী ফলাফল
+            </button>
 
             <button
-    class="flex items-center gap-2 bg-[#2C5A63] text-white px-4 py-2 rounded-md hover:bg-[#283593] transition"
-       @click="router.get(route('find_result.merit_list'))"
->
-    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-            d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"
-        />
-    </svg>
-    মেধা তালিকা
-</button>
-
+                class="flex items-center gap-2 bg-emerald-700 text-white px-5 py-2 rounded-md hover:bg-emerald-800 transition-all duration-300 shadow-md"
+                @click="router.get(route('find_result.merit_list'))"
+            >
+                <i class="fas fa-award"></i>
+                মেধা তালিকা
+            </button>
         </div>
     </div>
 
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div class="group">
+            <label class=" text-emerald-900 mb-3 font-semibold flex items-center group-hover:text-emerald-700 transition-colors">
+                <i class="fas fa-mosque mr-2 text-emerald-700"></i>
+                মারহালা নির্বাচন করুন
+            </label>
+            <select v-model="form.CID"
+                class="w-full border-2 border-emerald-100 rounded-md p-2 bg-emerald-50 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all duration-300">
+                <option value="">নির্বাচন করুন</option>
+                <option v-for="(name, id) in marhalas" :key="id" :value="id">{{ name }}</option>
+            </select>
+        </div>
 
+        <div class="group">
+            <label class=" text-emerald-900 mb-3 font-semibold flex items-center group-hover:text-emerald-700 transition-colors">
+                <i class="fas fa-calendar-hijri mr-2 text-emerald-700"></i>
+                বছর নির্বাচন করুন
+            </label>
+            <select v-model="form.years"
+                class="w-full border-2 border-emerald-100 rounded-md p-2 bg-emerald-50 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all duration-300">
+                <option value="">সন নির্বাচন করুন</option>
+                <option v-for="year in availableYears" :key="year" :value="year">{{ year }}</option>
+            </select>
+        </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                    <div>
-                        <label class="block text-gray-700 mb-2 font-semibold">মারহালা নির্বাচন করুন</label>
-                        <select v-model="form.CID" class="w-full border rounded-md p-2">
-                            <option value="">নির্বাচন করুন</option>
-                            <option v-for="(name, id) in marhalas" :key="id" :value="id">
-                                {{ name }}
-                            </option>
-                        </select>
-                    </div>
+        <div class="group">
+            <label class=" text-emerald-900 mb-3 font-semibold flex items-center group-hover:text-emerald-700 transition-colors">
+                <i class="fas fa-id-card mr-2 text-emerald-700"></i>
+                রোল নম্বর
+            </label>
+            <input v-model="form.Roll" type="text"
+                placeholder="রোল নম্বর লিখুন"
+                class="w-full border-2 border-emerald-100 rounded-lg p-2 bg-emerald-50 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all duration-300">
+        </div>
 
-                    <div class="flex-1 min-w-[200px]">
-                        <label class="block text-black mb-2 font-semibold">বছর নির্বাচন করুন</label>
-                        <select v-model="form.years"
-                            class="w-full border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-[#004D40] text-black">
-                            <option value="">সন নির্বাচন করুন</option>
-                            <option v-for="year in availableYears" :key="year" :value="year">{{ year }}</option>
-                        </select>
-                    </div>
-                    <div class="flex-1 min-w-[200px]">
-                        <label class="block text-black mb-2 font-semibold">রোল নম্বর</label>
-                        <input v-model="form.Roll" type="text" placeholder="রোল নম্বর লিখুন"
-                            class="w-full border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-[#004D40] text-black">
-                    </div>
+        <div class="group">
+            <label class=" text-emerald-900 mb-3 font-semibold flex items-center group-hover:text-emerald-700 transition-colors">
+                <i class="fas fa-scroll mr-2 text-emerald-700"></i>
+                রেজিস্ট্রেশন নম্বর
+            </label>
+            <input v-model="form.reg_id" type="text"
+                placeholder="রেজিস্ট্রেশন নম্বর লিখুন"
+                class="w-full  border-emerald-100 rounded-md p-2 bg-emerald-50 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all duration-300">
+        </div>
+    </div>
 
-                    <div class="flex-1 min-w-[200px]">
-                        <label class="block text-black mb-2 font-semibold">রেজিস্ট্রেশন নম্বর</label>
-                        <input v-model="form.reg_id" type="text" placeholder="রেজিস্ট্রেশন নম্বর লিখুন"
-                            class="w-full border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-[#004D40] text-black">
-                    </div>
-                    <!-- Continue with other form fields -->
-                    <!-- ... -->
+    <div class="mt-8 flex justify-end">
+        <button @click="search"
+            class="bg-emerald-800 text-white px-8 py-2 rounded-md hover:bg-emerald-900 transition-all duration-300 flex items-center gap-2 shadow-md">
+            <i class="fas fa-search"></i>
+            ফলাফল খুঁজুন
+        </button>
+    </div>
+</div>
 
-
-                </div>
-
-                <div class="mt-6 text-right">
-                    <button @click="search"
-                        class="bg-[#2C5A63] text-white px-8 py-2 rounded-md hover:bg-[#2C5A63] transition-colors">
-                        ফলাফল খুঁজুন
-                    </button>
-                </div>
-            </div>
 
             <!-- Results Section -->
-            <div v-for="student in searchResults.data" :key="student.id" class="bg-white p-5  rounded-md">
-                <div class="flex justify-end gap-4 mb-6">
-<button @click="printCertificate(student)"
-            class="flex items-center gap-2 bg-[#004D40] text-white px-4 py-2 rounded-md hover:bg-[#00695C] transition">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
-                stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
-            </svg>
+            <div v-for="student in searchResults.data" :key="student.id" class="bg-white p-8 rounded-lg shadow-lg border-t-4 border-emerald-800">
+    <!-- Action Buttons -->
+    <div class="flex justify-end gap-4 mb-8">
+        <button @click="printCertificate(student)"
+            class="flex items-center gap-2 bg-emerald-800 text-white px-6 py-2 rounded-md hover:bg-emerald-900 transition-all duration-300 shadow-md">
+            <i class="fas fa-print text-lg"></i>
             প্রিন্ট করুন
         </button>
 
- <button @click="downloadCertificate(student)"
-            class="flex items-center gap-2 bg-[#004D40] text-white px-4 py-2 rounded-md hover:bg-[#00695C] transition">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
-                stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-            </svg>
+        <button @click="downloadCertificate(student)"
+            class="flex items-center gap-2 bg-emerald-700 text-white px-6 py-2 rounded-md hover:bg-emerald-800 transition-all duration-300 shadow-md">
+            <i class="fas fa-download text-lg"></i>
             ডাউনলোড করুন
         </button>
     </div>
 
-                <div v-for="student in searchResults.data" :key="student.id">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <!-- Student Information -->
-                        <div class="space-y-4">
-                            <div class="flex justify-between border-b pb-2 text-black">
-                                <span class="font-semibold">নাম:</span>
-                                <span class="font-semibold">{{ student.Name }}</span>
-                            </div>
-                            <div class="flex justify-between border-b pb-2 text-black">
-                                <span class="font-semibold">পিতার নাম:</span>
-                                <span class="font-semibold">{{ student.Father }}</span>
-                            </div>
-                            <div class="flex justify-between border-b pb-2 text-black">
-                                <span class="font-semibold">রোল নম্বর:</span>
-                                <span class="font-semibold">{{ student.Roll }}</span>
-                            </div>
-                            <div class="flex justify-between border-b pb-2 text-black">
-                                <span class="font-semibold">রেজিস্ট্রেশন নম্বর:</span>
-                                <span class="font-semibold">{{ student.reg_id }}</span>
-                            </div>
-                            <div class="flex justify-between border-b pb-2 text-black">
-                                <span class="font-semibold">মাদরাসার নাম:</span>
-                                <span class="font-semibold">{{ student.Madrasha }}</span>
-                            </div>
-                        </div>
+    <!-- Islamic Decorative Divider -->
+    <!-- <div class="flex justify-center mb-8">
+        <div class="flex items-center gap-4">
+            <i class="fas fa-star-and-crescent text-emerald-600"></i>
+            <div class="h-0.5 w-32 bg-emerald-200"></div>
+            <i class="fas fa-mosque text-emerald-600"></i>
+            <div class="h-0.5 w-32 bg-emerald-200"></div>
+            <i class="fas fa-star-and-crescent text-emerald-600"></i>
+        </div>
+    </div> -->
 
-                        <!-- Result Information -->
-                        <div class="space-y-4">
-                            <div class="bg-gray-50 p-4 rounded-lg">
-                                <h3 class="text-xl font-bold text-black mb-4">ফলাফল সারসংক্ষেপ</h3>
-                                <div class="space-y-2">
-                                    <div class="flex justify-between text-black">
-                                        <span class="font-semibold"> মোট পূর্ণমান:</span>
-                                        <span>৮০০</span>
-                                    </div>
-                                    <div class="flex justify-between text-black">
-                                        <span class="font-semibold">প্রাপ্ত নম্বর:</span>
-                                        <span>{{ student.Total }}</span>
-                                    </div>
-                                    <div class="flex justify-between text-black">
-                                        <span class="font-semibold">শতকরা হার:</span>
-                                        <span>{{ (student.Total) / 8 }}</span>
-                                    </div>
-                                    <div class="flex justify-between text-black">
-                                        <span class="font-semibold">বিভাগ:</span>
-                                        <span class="font-bold">{{ (student.Division) }}</span>
-                                    </div>
-
-                                    <div class="flex justify-between text-black">
-                                        <span class="font-semibold">মেধা তালিকা:</span>
-                                        <span class="font-bold">{{ (student.Positions) }} তম</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Detailed Marks -->
-                    <div class="mt-8">
-                        <h3 class="text-xl font-bold text-black mb-4">বিস্তারিত নম্বর</h3>
-                        <div class="overflow-x-auto">
-                            <table class="w-full">
-                                <thead class="bg-gray-50">
-                                    <tr class="text-black">
-                                        <th class="px-4 py-2 text-left">বিষয়</th>
-                                        <th class="px-4 py-2 text-center">পূর্ণমান</th>
-                                        <th class="px-4 py-2 text-center">প্রাপ্ত নম্বর</th>
-                                        <th class="px-4 py-2 text-center">গ্রেড</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="divide-y text-black font-semibold">
-                                    <tr v-for="index in getSubjectCount(student)" :key="index">
-                                        <td class="px-4 py-2">{{ student[`SubLabel_${index}`] }}</td>
-                                        <td class="px-4 py-2 text-center">১০০</td>
-                                        <td class="px-4 py-2 text-center font-semibold">
-                                            {{ student[`SubValue_${index}`] }}
-                                        </td>
-                                        <td class="px-4 py-2 text-center font-semibold">
-                                            {{ getGrade(student[`SubValue_${index}`]) }}
-                                        </td>
-                                    </tr>
-                                </tbody>
-
-
-                            </table>
-                        </div>
-                    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <!-- Student Information -->
+        <div class="space-y-4 bg-emerald-50 p-6 rounded-md">
+            <h3 class="text-xl font-bold text-emerald-900 mb-6 flex items-center">
+                <i class="fas fa-user-graduate mr-2"></i> ছাত্র তথ্য
+            </h3>
+            <div class="space-y-4">
+                <div class="flex justify-between border-b-2 border-emerald-100 pb-3 text-emerald-900">
+                    <span class="font-semibold flex items-center"><i class="fas fa-user mr-2"></i> নাম:</span>
+                    <span class="font-semibold">{{ student.Name }}</span>
+                </div>
+                <div class="flex justify-between border-b-2 border-emerald-100 pb-3 text-emerald-900">
+                    <span class="font-semibold flex items-center"><i class="fas fa-user mr-2"></i> পিতার নাম:</span>
+                    <span class="font-semibold">{{ student.Father }}</span>
                 </div>
 
+                <div class="flex justify-between border-b-2 border-emerald-100 pb-3 text-emerald-900">
+    <span class="font-semibold flex items-center">
+        <i class="fas fa-calendar-day mr-2 text-emerald-700"></i> জন্ম-তারিখ:
+    </span>
+    <span class="font-semibold">{{ student.DateofBirth }}</span>
+</div>
 
+
+                <div class="flex justify-between border-b-2 border-emerald-100 pb-3 text-emerald-900">
+                    <span class="font-semibold flex items-center"><i class="fas fa-school mr-2"></i> মাদরাসার নাম:</span>
+                    <span class="font-semibold">{{ student.Madrasha }}</span>
+                </div>
+
+                <div class="flex justify-between border-b-2 border-emerald-100 pb-3 text-emerald-900">
+                    <span class="font-semibold flex items-center"><i class="fas fa-school mr-2"></i> মারকাযের নাম:</span>
+                    <span class="font-semibold">{{ student.Markaj }}</span>
+                </div>
+
+                <div class="flex justify-between border-b-2 border-emerald-100 pb-3 text-emerald-900">
+                    <span class="font-semibold flex items-center"><i class="fas fa-hashtag mr-2"></i> রোল নম্বর:</span>
+                    <span class="font-semibold">{{ student.Roll }}</span>
+                </div>
+
+                <div class="flex justify-between border-b-2 border-emerald-100 pb-3 text-emerald-900">
+                    <span class="font-semibold flex items-center"><i class="fas fa-hashtag mr-2"></i> রেজিস্ট্রেশন নম্বর:</span>
+                    <span class="font-semibold">{{ student.reg_id }}</span>
+                </div>
             </div>
+        </div>
+
+        <!-- Result Summary -->
+        <div class="bg-emerald-50 p-6 rounded-ম">
+            <h3 class="text-xl font-bold text-emerald-900 mb-6 flex items-center">
+                <i class="fas fa-award mr-2"></i> ফলাফল সারসংক্ষেপ
+            </h3>
+            <div class="space-y-4">
+    <div class="flex justify-between text-emerald-900">
+        <span class="font-semibold flex items-center">
+            <i class="fas fa-calculator mr-2 text-emerald-700"></i> মোট নম্বর:
+        </span>
+        <span>{{ student.Total }}</span>
+    </div>
+
+    <div class="flex justify-between text-emerald-900">
+        <span class="font-semibold flex items-center">
+            <i class="fas fa-trophy mr-2 text-emerald-700"></i> মেধা তালিকা:
+        </span>
+        <span>{{ student.Positions }}</span>
+    </div>
+
+    <div class="flex justify-between text-emerald-900">
+        <span class="font-semibold flex items-center">
+            <i class="fas fa-chart-line mr-2 text-emerald-700"></i> গঢ় নম্বর:
+        </span>
+        <span>{{ student.Total/8}}</span>
+    </div>
+    <div class="flex justify-between text-emerald-900">
+    <span class="font-semibold flex items-center">
+        <i class="fas fa-award mr-2 text-emerald-700"></i> গ্রেস প্রাপ্ত কিতাবের নাম:
+    </span>
+    <span>{{ student.GraceLabel }}</span>
+</div>
+
+<div class="flex justify-between text-emerald-900">
+    <span class="font-semibold flex items-center">
+    <i class="fas fa-star-half-alt mr-2 text-emerald-700"></i> গ্রেস প্রাপ্ত নম্বর:
+    </span>
+    <span>{{ student.GraceValue }}</span>
+</div>
+
+</div>
+
+        </div>
+    </div>
+
+    <!-- Detailed Marks -->
+    <div class="mt-8">
+        <h3 class="text-xl font-bold text-emerald-900 mb-6 flex items-center">
+            <i class="fas fa-book-open mr-2"></i> বিস্তারিত নম্বর
+        </h3>
+        <div class="overflow-x-auto">
+            <table class="w-full">
+                <thead class="bg-emerald-100">
+                    <tr class="text-emerald-900">
+                        <th class="px-6 py-4 text-left">বিষয়</th>
+                        <th class="px-6 py-4 text-center">পূর্ণমান</th>
+                        <th class="px-6 py-4 text-center">প্রাপ্ত নম্বর</th>
+                        <!-- <th class="px-6 py-4 text-center">গ্রেড</th> -->
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-emerald-100">
+                    <tr v-for="index in getSubjectCount(student)" :key="index"
+                        class="text-emerald-900 hover:bg-emerald-50 transition-colors">
+                        <td class="px-6 py-4">{{ student[`SubLabel_${index}`] }}</td>
+                        <td class="px-6 py-4 text-center">১০০</td>
+                        <td class="px-6 py-4 text-center font-semibold">{{ student[`SubValue_${index}`] }}</td>
+                        <!-- <td class="px-6 py-4 text-center font-semibold">{{ getGrade(student[`SubValue_${index}`]) }}</td> -->
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
         </main>
     </div>
 </template>

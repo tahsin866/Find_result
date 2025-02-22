@@ -183,70 +183,99 @@ const quickSearch = (type) => {
 
     <div style="font-family: 'Merriweather','SolaimanLipi',sans-serif;" class="min-h-screen bg-gray-50">
         <!-- Header -->
-        <header class="bg-[#2C5A63] shadow-lg">
-    <div class="container mx-auto px-6 py-4">
-        <div class="flex flex-col md:flex-row justify-between items-center">
-            <div class="w-full text-center mb-4 md:mb-0">
-                <h1 class="text-5xl font-bold text-white">বেফাকুল মাদারিসিল আরাবিয়া বাংলাদেশ</h1>
-                <h3 class="text-2xl font-bold text-white">(বাংলাদেশ কওমী মাদরাসা শিক্ষাবোর্ড)</h3>
-                <h3 class="text-2xl font-bold text-white">২০৫, কাজলার পাড় (ভাঙ্গাপ্রেস), যাত্রাবাড়ী, ঢাকা-১২৩৬</h3>
+        <header class="bg-emerald-900">
+    <!-- Islamic Geometric Pattern Top -->
+    <div class="" style="background-image: url('path-to-islamic-pattern.png')"></div>
+
+    <div class="container mx-auto px-6 py-8">
+        <div class="flex flex-col items-center">
+            <!-- Arabic Bismillah -->
+
+
+            <!-- Main Content -->
+            <div class="w-full text-center space-y-6">
+                <!-- Decorative Border Start -->
+                <div class="flex justify-center mb-4">
+                    <div class="border-2 border-emerald-300/30 p-1 rounded-md">
+                        <div class="border-2 border-emerald-300/30 px-8 py-4 rounded-md">
+                            <h1 class="text-5xl font-bold text-white">
+                                বেফাকুল মাদারিসিল আরাবিয়া বাংলাদেশ
+                            </h1>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Subtitle with Islamic Border -->
+                <div class="relative">
+                    <div class="absolute inset-0 flex items-center">
+                        <div class="h-px w-full bg-emerald-300/20"></div>
+                    </div>
+                    <div class="relative flex justify-center">
+                        <h3 class="px-4 bg-gradient-to-r from-emerald-900 to-emerald-800 text-2xl font-bold text-emerald-100">
+                            (বাংলাদেশ কওমী মাদরাসা শিক্ষাবোর্ড)
+                        </h3>
+                    </div>
+                </div>
+
+                <!-- Address with Decorative Elements -->
+                <div class="flex justify-center items-center gap-4">
+                    <span class="text-emerald-300">❖</span>
+                    <h3 class="text-2xl font-bold text-emerald-100">
+                        ২০৫, কাজলার পাড় (ভাঙ্গাপ্রেস), যাত্রাবাড়ী, ঢাকা-১২৩৬
+                    </h3>
+                    <span class="text-emerald-300">❖</span>
+                </div>
             </div>
-            <nav v-if="canLogin">
-                <Link
-                    v-if="$page.props.auth.user"
-                    :href="route('dashboard')"
-                    class="bg-white text-[#2C5A63] px-6 py-2 rounded hover:bg-gray-100 transition-colors"
-                >
-                    ড্যাশবোর্ড
-                </Link>
-            </nav>
         </div>
     </div>
+
+    <!-- Islamic Geometric Pattern Bottom -->
+    <div class="h-4 bg-repeat-x transform rotate-180" style="background-image: url('path-to-islamic-pattern.png')"></div>
 </header>
+
 
 
         <!-- Main Content -->
         <main class="container mx-auto px-4 py-8">
             <!-- Search Form -->
-            <div class="bg-white rounded-lg shadow-sm p-6 mb-8">
-
-
-                <div class="mb-6 flex justify-between items-center">
-        <h2 class="text-2xl font-bold text-[#2C5A63]">মারহালাওয়ারী ফলাফল অনুসন্ধান</h2>
+            <div class="bg-white rounded-sm shadow-lg p-8 mb-8 border-t-4 border-emerald-800">
+    <div class="mb-6 flex justify-between items-center">
+        <h2 class="text-2xl font-bold text-[#1B4F72]">মারহালাওয়ারী ফলাফল অনুসন্ধান</h2>
 
         <div class="flex gap-4">
             <button
-    class="flex items-center gap-2 bg-[#004D40] text-white px-4 py-2 rounded-md hover:bg-[#2C5A63] transition"
-    @click="router.get(route('find_result.studentResultFind'))"
->
-    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-            d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-        />
-    </svg>
-    ব্যক্তিগত ফলাফল
-</button>
-
-
+             class="flex items-center gap-2 bg-emerald-800 text-white px-5 py-2 rounded-md hover:bg-emerald-900 transition-all duration-300 shadow-md"
+                @click="router.get(route('find_result.studentResultFind'))"
+            >
+                <!-- Student Icon with Islamic Cap -->
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path d="M12 4c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/>
+                    <path d="M8 14c0-2.2 1.8-4 4-4s4 1.8 4 4"/>
+                    <path d="M9 2h6v2H9z"/> <!-- Islamic cap -->
+                    <path d="M12 14c-2.7 0-8 1.3-8 4v2h16v-2c0-2.7-5.3-4-8-4z"/>
+                </svg>
+                ব্যক্তিগত ফলাফল
+            </button>
 
             <button
-    class="flex items-center gap-2 bg-[#2C5A63] text-white px-4 py-2 rounded-md hover:bg-[#2C5A63] transition"
-    @click="router.get(route('find_result.merit_list'))"
->
-    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-            d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"
-        />
-    </svg>
-    মেধা তালিকা
-</button>
-
+          class="flex items-center gap-2 bg-emerald-800 text-white px-5 py-2 rounded-md hover:bg-emerald-900 transition-all duration-300 shadow-md"
+                @click="router.get(route('find_result.merit_list'))"
+            >
+                <!-- Star & Crescent Icon -->
+                <i class="fas fa-award"></i>
+                মেধা তালিকা
+            </button>
         </div>
     </div>
+
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-end">
         <div>
-            <label class="block text-gray-700 mb-2 font-semibold">মারহালা নির্বাচন করুন</label>
-            <select v-model="form.CID" class="w-full border rounded-md p-2">
+            <label class=" text-emerald-900 mb-3 font-semibold flex items-center group-hover:text-emerald-700 transition-colors">
+                <i class="fas fa-mosque mr-2 text-emerald-700"></i>
+                মারহালা নির্বাচন করুন
+            </label>
+            <select v-model="form.CID"
+            class="w-full border-2 border-emerald-100 rounded-md p-2 bg-emerald-50 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all duration-300">
                 <option value="">নির্বাচন করুন</option>
                 <option v-for="(name, id) in marhalas" :key="id" :value="id">
                     {{ name }}
@@ -255,30 +284,42 @@ const quickSearch = (type) => {
         </div>
 
         <div>
-            <label class="block text-black mb-2 font-semibold">বছর নির্বাচন করুন</label>
-            <select v-model="form.years" class="w-full border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-[#004D40] text-black">
+            <label class=" text-emerald-900 mb-3 font-semibold flex items-center group-hover:text-emerald-700 transition-colors">
+                <i class="fas fa-calendar-hijri mr-2 text-emerald-700"></i>
+                বছর নির্বাচন করুন
+            </label>
+            <select v-model="form.years"
+            class="w-full  border-emerald-100 rounded-md p-2 bg-emerald-50 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all duration-300">
                 <option value="">সন নির্বাচন করুন</option>
                 <option v-for="year in availableYears" :key="year" :value="year">{{ year }}</option>
             </select>
         </div>
 
         <div>
-            <label class="block text-black mb-2 font-semibold">ইলহাক নম্বর দিন</label>
+            <label class=" text-emerald-900 mb-3 font-semibold flex items-center group-hover:text-emerald-700 transition-colors">
+                <i class="fas fa-id-card mr-2 text-emerald-700"></i>
+          ইলহাক নম্বর দিন
+            </label>
             <input
                 v-model="form.MElhaq"
                 type="text"
                 placeholder="রোল নম্বর লিখুন"
-                class="w-full border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-[#004D40] text-black"
-            >
+                class="w-full  border-emerald-100 rounded-md p-2 bg-emerald-50 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all duration-300">
         </div>
 
         <div class="text-right">
-            <button @click="search" class="bg-[#2C5A63] text-white px-8 py-2 rounded-md hover:bg-[#2C5A63] transition-colors w-full">
-                ফলাফল খুঁজুন
+            <button @click="search"
+            class="bg-emerald-800 text-white px-8 py-2 rounded-md hover:bg-emerald-900 transition-all duration-300 flex items-center gap-2 shadow-md">
+                <!-- Search Icon with Islamic Pattern -->
+                <span class="flex items-center justify-center gap-2">
+                    <i class="fas fa-search"></i>
+                    ফলাফল খুঁজুন
+                </span>
             </button>
         </div>
     </div>
 </div>
+
 
 
             <!-- Results Section -->
@@ -309,60 +350,113 @@ const quickSearch = (type) => {
 
     <!-- Madrasa Information -->
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-20 mb-10">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-20 mb-10">
 
-        <div class="space-y-4">
-            <div class="flex justify-between border-b pb-2 text-black">
-                <span class="font-semibold">মাদরাসা  নাম:</span>
-                <span>{{ searchResults.data[0]?.Madrasha }}</span>
-            </div>
-            <div class="flex justify-between border-b pb-2 text-black">
-                <span class="font-semibold">ইলহাক:</span>
-                <span>{{ searchResults.data[0]?.MElhaq }}</span>
-            </div>
-            <div class="flex justify-between border-b pb-2 text-black">
-                <span class="font-semibold">ক্লাস:</span>
-                <span>{{ searchResults.data[0]?.Class }}</span>
-            </div>
-            <div class="flex justify-between border-b pb-2 text-black">
-                <span class="font-semibold">শিক্ষাবর্ষ:</span>
-                <span>{{ searchResults.data[0]?.years }}</span>
-            </div>
-            <!-- <div class="flex justify-between border-b pb-2 text-black">
-                <span class="font-semibold">মাদরাসার নাম:</span>
-                <span>{{ student.Madrasha }}</span>
-            </div> -->
+        <div class="space-y-4 bg-emerald-50 p-6 rounded-sm shadow-md">
+        <h3 class="text-xl font-bold text-emerald-900 mb-6 flex items-center">
+            <i class="fas fa-info-circle mr-2"></i> মাদরাসা তথ্য
+        </h3>
+
+        <div class="flex justify-between border-b-2 border-emerald-100 pb-3 text-emerald-900">
+            <span class="font-semibold flex items-center">
+                <i class="fas fa-school mr-2 text-emerald-700"></i> মাদরাসা নাম:
+            </span>
+            <span>{{ searchResults.data[0]?.Madrasha }}</span>
         </div>
 
-        <!-- Result Information -->
-        <div class="space-y-4">
-            <div class="bg-gray-50 p-4 rounded-lg">
-                <h3 class="text-xl font-bold text-black mb-4">ফলাফল সারসংক্ষেপ</h3>
-                <div class="space-y-2">
-                    <div class="flex justify-between text-black">
-                        <span class="font-semibold"> মোট পূর্ণমান:</span>
-                        <span>৮০০</span>
-                    </div>
-                    <div class="flex justify-between text-black">
-                        <span class="font-semibold">প্রাপ্ত নম্বর:</span>
-                        <span>{{ searchResults.data[0]?.Madrasha }}</span>
-                    </div>
-                    <div class="flex justify-between text-black">
-                        <span class="font-semibold">শতকরা হার:</span>
-                        <span>{{ searchResults.data[0]?.Madrasha }}</span>
-                    </div>
-                    <div class="flex justify-between text-black">
-                        <span class="font-semibold">বিভাগ:</span>
-                        <span class="font-bold">{{ searchResults.data[0]?.Madrasha }}</span>
-                    </div>
+        <div class="flex justify-between border-b-2 border-emerald-100 pb-3 text-emerald-900">
+            <span class="font-semibold flex items-center">
+                <i class="fas fa-mosque mr-2 text-emerald-700"></i> মারকাজের নাম:
+            </span>
+            <span>{{ searchResults.data[0]?.Madrasha }}</span>
+        </div>
 
-                    <div class="flex justify-between text-black">
-                        <span class="font-semibold">মেধা তালিকা:</span>
-                        <span class="font-bold">{{ searchResults.data[0]?.Positions }}</span>
+        <div class="flex justify-between border-b-2 border-emerald-100 pb-3 text-emerald-900">
+            <span class="font-semibold flex items-center">
+                <i class="fas fa-id-card mr-2 text-emerald-700"></i> ইলহাক:
+            </span>
+            <span>{{ searchResults.data[0]?.MElhaq }}</span>
+        </div>
+
+        <div class="flex justify-between border-b-2 border-emerald-100 pb-3 text-emerald-900">
+            <span class="font-semibold flex items-center">
+                <i class="fas fa-book-reader mr-2 text-emerald-700"></i> ক্লাস:
+            </span>
+            <span>{{ searchResults.data[0]?.Class }}</span>
+        </div>
+
+        <div class="flex justify-between border-b-2 border-emerald-100 pb-3 text-emerald-900">
+            <span class="font-semibold flex items-center">
+                <i class="fas fa-calendar-hijri mr-2 text-emerald-700"></i> শিক্ষাবর্ষ:
+            </span>
+            <span>{{ searchResults.data[0]?.years }}</span>
+        </div>
+    </div>
+
+        <!-- Result Information -->
+        <div class="bg-emerald-50 p-6 rounded-md shadow-md">
+    <h3 class="text-xl font-bold text-emerald-900 mb-6 flex items-center">
+        <i class="fas fa-chart-bar mr-2"></i> ফলাফল সারসংক্ষেপ
+    </h3>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- মূল তথ্য -->
+        <div class="space-y-4">
+            <div class="flex justify-between text-emerald-900 bg-emerald-100 p-4 rounded-md">
+                <span class="font-semibold flex items-center">
+                    <i class="fas fa-users mr-2 text-emerald-700"></i> মোট শিক্ষার্থী
+                </span>
+                <!-- <span class="text-lg font-bold">{{ totalStudents }} জন</span> -->
+            </div>
+
+
+            <!-- বিভাগভিত্তিক ফলাফল -->
+            <div class="bg-white p-4 rounded-md">
+                <h4 class="font-semibold mb-4 text-emerald-800">বিভাগভিত্তিক ফলাফল:</h4>
+                <div class="space-y-3">
+                    <div v-for="(count, division) in divisionCounts" :key="division"
+                        class="flex justify-between items-center">
+                        <span class="flex items-center">
+                            <i class="fas fa-medal mr-2 text-emerald-600"></i>
+                            {{ division }}:
+                        </span>
+                        <!-- <span class="font-semibold">{{ count }} জন</span> -->
                     </div>
                 </div>
             </div>
         </div>
+
+        <!-- শতকরা হার -->
+        <div class="space-y-4">
+            <div class="bg-white p-4 rounded-sm">
+                <h4 class="font-semibold mb-4 text-emerald-800">শতকরা হার:</h4>
+                <div class="space-y-3">
+                    <div class="flex justify-between items-center">
+                        <span class="flex items-center">
+                            <i class="fas fa-check-circle mr-2 text-green-600"></i>
+                            পাশের হার:
+                        </span>
+                        <span class="font-bold text-green-600">{{ passRate }}%</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="flex items-center">
+                            <i class="fas fa-times-circle mr-2 text-red-600"></i>
+                            ফেলের হার:
+                        </span>
+                        <span class="font-bold text-red-600">{{ failRate }}%</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="flex items-center">
+                            <i class="fas fa-user-times mr-2 text-orange-600"></i>
+                            অনুপস্থিতির হার:
+                        </span>
+                        <span class="font-bold text-orange-600">{{ absentRate }}%</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
     </div>
 
 
@@ -383,19 +477,19 @@ const quickSearch = (type) => {
 
     <!-- Students Results Table -->
     <div class="overflow-x-auto">
-        <table id="resultsTable" class="w-full border border-gray-200 rounded-md">
-            <thead class="bg-gray-50 text-black">
+        <table id="resultsTable" class="w-full border-2 border-emerald-100 rounded-md shadow-lg">
+            <thead class="bg-emerald-800 text-white">
                 <tr>
-                    <th class="px-4 py-2 text-left">ইলহাক</th>
-                    <th class="px-4 py-2 text-left">নাম</th>
+                    <th class="px-4 py-2 text-left"><i class="fas fa-id-card mr-2"></i>ইলহাক</th>
+                    <th class="px-4 py-2 text-left"><i class="fas fa-user-graduate mr-2"></i>নাম</th>
                     <th v-for="(subject, index) in getSubjects(searchResults.data[0])"
                         :key="index"
                         class="px-4 py-2 text-center">
                         {{ subject.name }}
                     </th>
-                    <th class="px-4 py-2 text-center">মোট</th>
-                    <th class="px-4 py-2 text-center">বিভাগ</th>
-                    <th class="px-4 py-2 text-center">মেধা তালিকা</th>
+                    <th class="px-4 py-2 text-center"><i class="fas fa-calculator mr-2"></i>মোট</th>
+                    <th class="px-4 py-2 text-center"><i class="fas fa-star mr-2"></i>বিভাগ</th>
+                    <th class="px-4 py-2 text-center"><i class="fas fa-award mr-2"></i>মেধা তালিকা</th>
                 </tr>
             </thead>
             <tbody class="divide-y text-black font-semibold">

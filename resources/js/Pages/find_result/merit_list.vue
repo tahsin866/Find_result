@@ -162,26 +162,56 @@ const quickSearch = (type) => {
 
     <div style="font-family: 'Merriweather','SolaimanLipi',sans-serif;" class="min-h-screen bg-gray-50">
         <!-- Header -->
-        <header class="bg-[#2C5A63] shadow-lg">
-    <div class="container mx-auto px-6 py-4">
-        <div class="flex flex-col md:flex-row justify-between items-center">
-            <div class="w-full text-center mb-4 md:mb-0">
-                <h1 class="text-5xl font-bold text-white">বেফাকুল মাদারিসিল আরাবিয়া বাংলাদেশ</h1>
-                <h3 class="text-2xl font-bold text-white">(বাংলাদেশ কওমী মাদরাসা শিক্ষাবোর্ড)</h3>
-                <h3 class="text-2xl font-bold text-white">২০৫, কাজলার পাড় (ভাঙ্গাপ্রেস), যাত্রাবাড়ী, ঢাকা-১২৩৬</h3>
+        <header class="bg-emerald-900">
+    <!-- Islamic Geometric Pattern Top -->
+    <div class="" style="background-image: url('path-to-islamic-pattern.png')"></div>
+
+    <div class="container mx-auto px-6 py-8">
+        <div class="flex flex-col items-center">
+            <!-- Arabic Bismillah -->
+
+
+            <!-- Main Content -->
+            <div class="w-full text-center space-y-6">
+                <!-- Decorative Border Start -->
+                <div class="flex justify-center mb-4">
+                    <div class="border-2 border-emerald-300/30 p-1 rounded-lg">
+                        <div class="border-2 border-emerald-300/30 px-8 py-4 rounded-lg">
+                            <h1 class="text-5xl font-bold text-white">
+                                বেফাকুল মাদারিসিল আরাবিয়া বাংলাদেশ
+                            </h1>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Subtitle with Islamic Border -->
+                <div class="relative">
+                    <div class="absolute inset-0 flex items-center">
+                        <div class="h-px w-full bg-emerald-300/20"></div>
+                    </div>
+                    <div class="relative flex justify-center">
+                        <h3 class="px-4 bg-gradient-to-r from-emerald-900 to-emerald-800 text-2xl font-bold text-emerald-100">
+                            (বাংলাদেশ কওমী মাদরাসা শিক্ষাবোর্ড)
+                        </h3>
+                    </div>
+                </div>
+
+                <!-- Address with Decorative Elements -->
+                <div class="flex justify-center items-center gap-4">
+                    <span class="text-emerald-300">❖</span>
+                    <h3 class="text-2xl font-bold text-emerald-100">
+                        ২০৫, কাজলার পাড় (ভাঙ্গাপ্রেস), যাত্রাবাড়ী, ঢাকা-১২৩৬
+                    </h3>
+                    <span class="text-emerald-300">❖</span>
+                </div>
             </div>
-            <nav v-if="canLogin">
-                <Link
-                    v-if="$page.props.auth.user"
-                    :href="route('dashboard')"
-                    class="bg-white text-[#727D73] px-6 py-2 rounded hover:bg-gray-100 transition-colors"
-                >
-                    ড্যাশবোর্ড
-                </Link>
-            </nav>
         </div>
     </div>
+
+    <!-- Islamic Geometric Pattern Bottom -->
+    <div class="h-4 bg-repeat-x transform rotate-180" style="background-image: url('path-to-islamic-pattern.png')"></div>
 </header>
+
 
 
         <!-- Main Content -->

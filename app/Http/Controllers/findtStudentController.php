@@ -19,8 +19,6 @@ class findtStudentController extends Controller
 
 
 
-
-
     public function search(Request $request)
     {
         // Fetch distinct years in descending order
@@ -51,25 +49,45 @@ class findtStudentController extends Controller
                 'years' => $request->years,
                 'Roll' => $request->Roll,
                 'reg_id' => $request->reg_id,
-            ])->select('Name', 'Father', 'Roll', 'reg_id', 'Madrasha', 'Total', 'Division', 'Positions',
-                       'SubLabel_1', 'SubValue_1', 'SubLabel_2', 'SubValue_2',
-                       'SubLabel_3', 'SubValue_3', 'SubLabel_4', 'SubValue_4',
-                       'SubLabel_5', 'SubValue_5', 'SubLabel_6', 'SubValue_6',
-                       'SubLabel_7', 'SubValue_7', 'SubLabel_8', 'SubValue_8')
-              ->get();
+            ])->select(
+                'Name', 'Father', 'Roll', 'reg_id', 'Madrasha', 'Total', 'Division', 'Positions', 'GraceValue', 'GraceLabel', 'Markaj', 'DateofBirth',
+                'SubLabel_1', 'SubValue_1', 'SubLabel_2', 'SubValue_2',
+                'SubLabel_3', 'SubValue_3', 'SubLabel_4', 'SubValue_4',
+                'SubLabel_5', 'SubValue_5', 'SubLabel_6', 'SubValue_6',
+                'SubLabel_7', 'SubValue_7', 'SubLabel_8', 'SubValue_8'
+            )->get();
 
-            // Translate fields in bulk
+            // Process data and apply translations with grace logic
             $results = $students->map(function ($student) use ($translator) {
-                $fieldsToTranslate = ['Name', 'Father', 'Madrasha', 'Division', 'Roll', 'reg_id', 'Total', 'Positions'];
+                // Translate fields
+                $fieldsToTranslate = ['Name', 'Father', 'Madrasha', 'Division', 'Roll', 'reg_id', 'Total', 'Positions','Markaj', 'DateofBirth'
+
+
+            ];
                 foreach ($fieldsToTranslate as $field) {
                     $student->$field = $translator->translate($student->$field);
                 }
 
                 for ($i = 1; $i <= 8; $i++) {
                     $labelKey = "SubLabel_$i";
+                    $valueKey = "SubValue_$i";
+
                     if (!empty($student->$labelKey)) {
                         $student->$labelKey = $translator->translate($student->$labelKey);
                     }
+
+                    // Apply grace logic
+                    if (!empty($student->GraceLabel) && $student->$labelKey == $student->GraceLabel) {
+                        $originalMarks = (int) $student->$valueKey; // মূল নম্বর
+                        $graceMarks = (int) $student->GraceValue; // গ্রেস নম্বর
+                        $totalMarks = $originalMarks + $graceMarks; // মোট নম্বর
+
+                        // নতুন ফরম্যাট: "মূল নম্বর + গ্রেস নম্বর = মোট নম্বর"
+                        $student->$valueKey =  "{$originalMarks} + {$graceMarks}  =  {$totalMarks}";
+                    }
+
+                    // Assign Grade
+                    $student->{"Grade_$i"} = $this->getGrade($student->$valueKey);
                 }
 
                 return $student;
@@ -85,6 +103,26 @@ class findtStudentController extends Controller
             ]
         ]);
     }
+
+    /**
+     * Function to get grade based on marks.
+     */
+    private function getGrade($marks)
+    {
+        if (!$marks) return 'N/A';
+
+        // Remove additional values like "50 + 5 = 55" and extract the final total
+        $marks = (int) preg_replace('/[^0-9]/', '', $marks);
+
+        if ($marks >= 80) return 'মুমতাজ';
+        if ($marks >= 70) return 'জায়্যিদ জিদ্দান';
+        if ($marks >= 60) return 'জায়্যিদ';
+        if ($marks >= 33) return 'মকবুল';
+        return 'ফেল';
+    }
+
+
+
 
 
     public function marhalaFind(Request $request)
@@ -146,6 +184,100 @@ class findtStudentController extends Controller
     }
 
 
+    // public function marhalaFind(Request $request)
+    // {
+    //     $years = Student::select('years')
+    //         ->distinct()
+    //         ->orderBy('years', 'desc')
+    //         ->pluck('years');
+
+    //     $marhalas = [
+    //         1 => 'তাকমিল',
+    //         2 => 'ফযিলত',
+    //         3 => 'সানাবিয়া উলইয়া',
+    //         4 => 'সানাবিয়া',
+    //         5 => 'মুতায়াসসিতা',
+    //         6 => 'ইবতেদাইয়্যা',
+    //         7 => 'হিফজুল কোরান',
+    //         8 => 'ইলমুল কিরাত',
+    //     ];
+
+    //     // Initialize statistics
+    //     $statistics = [
+    //         'totalStudents' => 0,
+    //         'divisionCounts' => [
+    //             'মুমতাজ' => 0,
+    //             'জায়্যিদ জিদ্দান' => 0,
+    //             'জায়্যিদ' => 0,
+    //             'মকবুল' => 0,
+    //             'ফেল' => 0,
+    //             'অনুপস্থিত' => 0
+    //         ],
+    //         'passRate' => 0,
+    //         'failRate' => 0,
+    //         'absentRate' => 0
+    //     ];
+
+    //     if ($request->filled(['CID', 'years', 'MElhaq'])) {
+    //         // Get students data
+    //         $students = Student::where([
+    //             'CID' => $request->CID,
+    //             'years' => $request->years,
+    //             'MElhaq' => $request->MElhaq
+    //         ])->get();
+
+    //         // Calculate total students
+    //         $statistics['totalStudents'] = $students->count();
+
+    //         // Count divisions
+    //         foreach ($students as $student) {
+    //             if (isset($statistics['divisionCounts'][$student->Division])) {
+    //                 $statistics['divisionCounts'][$student->Division]++;
+    //             }
+    //         }
+
+    //         // Calculate rates
+    //         if ($statistics['totalStudents'] > 0) {
+    //             $totalPassed = $statistics['totalStudents'] -
+    //                           $statistics['divisionCounts']['ফেল'] -
+    //                           $statistics['divisionCounts']['অনুপস্থিত'];
+
+    //             $statistics['passRate'] = round(($totalPassed / $statistics['totalStudents']) * 100, 2);
+    //             $statistics['failRate'] = round(($statistics['divisionCounts']['ফেল'] / $statistics['totalStudents']) * 100, 2);
+    //             $statistics['absentRate'] = round(($statistics['divisionCounts']['অনুপস্থিত'] / $statistics['totalStudents']) * 100, 2);
+    //         }
+
+    //         // Translate student data
+    //         $translator = new Translator();
+    //         $results = $students->map(function ($student) use ($translator) {
+    //             $student->Madrasha = $translator->translate($student->Madrasha);
+    //             $student->Name = $translator->translate($student->Name);
+    //             $student->MElhaq = $translator->translate($student->MElhaq);
+    //             $student->Division = $translator->translate($student->Division);
+    //             $student->Class = $translator->translate($student->Class);
+
+    //             for ($i = 1; $i <= 8; $i++) {
+    //                 $labelKey = "SubLabel_$i";
+    //                 if (!empty($student->$labelKey)) {
+    //                     $student->$labelKey = $translator->translate($student->$labelKey);
+    //                 }
+    //             }
+
+    //             return $student;
+    //         });
+    //     }
+
+    //     return Inertia::render('find_result/marhalawariFindResult', [
+    //         'availableYears' => $years,
+    //         'marhalas' => $marhalas,
+    //         'searchResults' => $results ?? [],
+    //         'totalStudents' => $statistics['totalStudents'],
+    //         'divisionCounts' => $statistics['divisionCounts'],
+    //         'passRate' => $statistics['passRate'],
+    //         'failRate' => $statistics['failRate'],
+    //         'absentRate' => $statistics['absentRate']
+    //     ]);
+    // }
 
 
 
