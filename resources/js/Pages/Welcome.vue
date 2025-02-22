@@ -38,7 +38,7 @@ function handleImageError() {
     <!-- Islamic Geometric Pattern Top -->
     <div class="" style="background-image: url('path-to-islamic-pattern.png')"></div>
 
-    <div class="container mx-auto px-6 py-5">
+    <div class="container mx-auto px-6 mt-3">
         <div class="flex flex-col items-center">
             <!-- Arabic Bismillah -->
 
@@ -171,8 +171,7 @@ function handleImageError() {
                 <h4 class="text-xl font-bold text-emerald-300 mb-4">যোগাযোগ</h4>
                 <div class="space-y-2">
                     <p>ফোন: +৮৮-০২-৭৫৪৮৯৩৪</p>
-                    <p>মোবাইল: +৮৮-০১৭১১-১২৩৪৫৬</p>
-                    <p>ইমেইল: info@befaq.org.bd</p>
+
                 </div>
             </div>
 
@@ -184,8 +183,7 @@ function handleImageError() {
                 <h4 class="text-xl font-bold text-emerald-300 mb-4">দ্রুত লিংক</h4>
                 <div class="space-y-2">
                     <p><a href="#" class="hover:text-emerald-300 transition">আমাদের সম্পর্কে</a></p>
-                    <p><a href="#" class="hover:text-emerald-300 transition">নোটিশ বোর্ড</a></p>
-                    <p><a href="#" class="hover:text-emerald-300 transition">যোগাযোগ করুন</a></p>
+
                 </div>
             </div>
         </div>
